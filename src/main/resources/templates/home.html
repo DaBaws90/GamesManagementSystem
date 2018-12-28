@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:insert="base.html :: headerfiles">
+<!-- <meta charset="ISO-8859-1"> -->
+<title>Home</title>
+</head>
+<body>
+	<div th:replace="base.html :: div-navbar"></div>
+	<h2 sec:authorize access="hasRole('ADMIN')">TESTEO HOME</h2>
+	<security:authorize access="hasRole('ROLE_ADMIN')">
+    This text is only visible to an admin
+    <br/>
+</security:authorize>
+</body>
+</html>
