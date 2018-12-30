@@ -18,7 +18,8 @@
 				<div th:if="${userAdded == 1}" class="alert alert-primary">Account succesfully created!</div>
 
 				<form class="form-signin" th:action="@{/signin}" method="POST">
-					<input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}">
+				<!-- El csrf se añade automaticamente mientras tengamos la anotación EnableWebSecurity y usemos Thymeleaf -->
+					<!-- <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"> -->
 
 					<div class="form-group">
 						<label for="username">Username</label> 
