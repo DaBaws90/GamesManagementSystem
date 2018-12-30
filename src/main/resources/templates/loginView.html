@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="base.html :: headerfiles">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Login</title>
+<title id="pageTitle">Login Page</title>
+<style>
+.flex-container{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    height: 85vh !important;
+    /* align-content: center;
+    align-items: center; */
+}
+</style>
 </head>
 
 <body>
 	<div th:insert="base.html :: div-navbar"></div>
-	<div class="container mt-5 mb-4">
+	<div style="display:flex;flex-direction: column;justify-content: center;height: 85vh;" class="container flex-container" sec:authorize="!isAuthenticated()">
 		<div class="row">
-			<div class="col-md-8 offset-md-2">
+			<div class="col-md-8 offset-md-2 centerDiv">
 				<div th:if="${error != null}" class="alert alert-danger">Invalid username or password</div>
 				<div th:if="${logout != null}" class="alert alert-primary">Session closed</div>
 				<div th:if="${userAdded == 1}" class="alert alert-primary">Account succesfully created!</div>
@@ -51,6 +61,18 @@
 				<a th:href="@{/users/register}" class="btn btn-info">Register</a>
 			</div>
 			
+		</div>
+	</div>
+	
+	<div style="display:flex;flex-direction: column;justify-content: center;height: 85vh;" class="container flex-container" sec:authorize="isAuthenticated()">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="text-center">
+					<h2>Whoops!</h2>
+					</br>
+					<h5>It seems like you are already logged in</h5>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div th:replace="base.html :: footer"></div>

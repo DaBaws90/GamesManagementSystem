@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="base.html :: headerfiles">
-<!-- <title>Home</title> -->
+<title id="pageTitle">Home Page</title>
+<!-- <link rel="stylesheet" type="text/css" href="css/base.css" th:href="@{css/base.css}" media="screen"> -->
 </head>
 <body>
 	<div th:replace="base.html :: div-navbar"></div>
 	
-	<div th:text="${username}"></div>
+	<!-- <div th:text="${username}"></div> -->
 	
-	<span sec:authorize="isAuthenticated()">Welcome <span th:text="${username}"></span></span>
+	<span sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name"></span>!</span>
 	</br>
 	
-	<div th:text="${permissions}"></div>
-	<div th:if="${permission != ROLE_USER}">
-		<h2>TESTEO HOME</h2>
+	<div sec:authorize="hasRole('ROLE_USER')">
+		<h2 class="text-muted">TESTEO HOME</h2>
 	</div>
-	<th:block sec:authorize="hasRole('ROLE_USER')">
-		<span sec:authorize="hasRole('ROLE_USER')">
-	    	This text is only visible to an admin
-		</span>
-	</th:block>
+	<span sec:authorize="hasRole('ROLE_ADMIN')">
+    	This text is only visible to an admin
+	</span>
 </body>
 </html>
