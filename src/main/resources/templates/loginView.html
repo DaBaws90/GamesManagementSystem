@@ -1,26 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
-<head th:insert="base.html :: headerfiles">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<head th:insert="fragments/head.html :: headerfiles">
 <title id="pageTitle">Login Page</title>
-<style>
-.flex-container{
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    height: 85vh !important;
-    /* align-content: center;
-    align-items: center; */
-}
-</style>
 </head>
 
 <body>
-	<div th:insert="base.html :: div-navbar"></div>
-	<div style="display:flex;flex-direction: column;justify-content: center;height: 85vh;" class="container flex-container" sec:authorize="!isAuthenticated()">
+	<div th:insert="fragments/navbar.html :: div-navbar"></div>
+	<div class="container flex-container-login" sec:authorize="!isAuthenticated()">
 		<div class="row">
 			<div class="col-md-8 offset-md-2 centerDiv">
 				<div th:if="${error != null}" class="alert alert-danger">Invalid username or password</div>
@@ -28,7 +14,7 @@
 				<div th:if="${userAdded == 1}" class="alert alert-primary">Account succesfully created!</div>
 
 				<form class="form-signin" th:action="@{/signin}" method="POST">
-				<!-- El csrf se aÃ±ade automaticamente mientras tengamos la anotaciÃ³n EnableWebSecurity y usemos Thymeleaf -->
+				<!-- El csrf se añade automaticamente mientras tengamos la anotación EnableWebSecurity y usemos Thymeleaf -->
 					<!-- <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"> -->
 
 					<div class="form-group">
@@ -64,7 +50,7 @@
 		</div>
 	</div>
 	
-	<div style="display:flex;flex-direction: column;justify-content: center;height: 85vh;" class="container flex-container" sec:authorize="isAuthenticated()">
+	<div class="container flex-container-login" sec:authorize="isAuthenticated()">
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
 				<div class="text-center">
@@ -75,7 +61,8 @@
 			</div>
 		</div>
 	</div>
-	<div th:replace="base.html :: footer"></div>
+	
+	<div th:replace="fragments/footer.html :: footer"></div>
 </body>
 
 </html>

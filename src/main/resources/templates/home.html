@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="base.html :: headerfiles">
+<head th:insert="fragments/head.html :: headerfiles">
 <title id="pageTitle">Home Page</title>
-<!-- <link rel="stylesheet" type="text/css" href="css/base.css" th:href="@{css/base.css}" media="screen"> -->
 </head>
 <body>
-	<div th:replace="base.html :: div-navbar"></div>
-	
-	<!-- <div th:text="${username}"></div> -->
+	<div th:insert="fragments/navbar.html :: div-navbar"></div>
 	
 	<span sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name"></span>!</span>
 	</br>
@@ -18,5 +15,6 @@
 	<span sec:authorize="hasRole('ROLE_ADMIN')">
     	This text is only visible to an admin
 	</span>
+	<div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>

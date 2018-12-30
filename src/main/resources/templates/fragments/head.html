@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <title th:include=":: #pageTitle">Dinamic title</title>
+    <title th:include=":: #pageTitle">Dynamic title</title>
 
     <!-- BootStrap 4 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -30,36 +28,7 @@
     
     <!-- Custom Base CSS -->
     <link rel="stylesheet" type="text/css" href="../static/css/base.css" th:href="@{/css/base.css}" media="all">
+    
+    <!-- Custom LoginPage CSS -->
+	<link rel="stylesheet" type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" media="all">
 </head>
-<body>
-    <div class="container-fluid" th:fragment="div-navbar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">Games S.L.</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-item nav-link active" th:href="@{'/home/'}">Home <span class="sr-only">(current)</span></a> 
-					<!-- <a class="nav-item nav-link" th:href="@{'/coches/'}">Coches</a> 
-					<a class="nav-item nav-link" th:href="@{'/carreras/'}">Carreras</a>
-					<a class="nav-item nav-link" th:href="@{'/participaciones/'}">Participaciones</a> -->
-					<!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
-				</div>
-			</div>
-			<div sec:authorize="isAuthenticated()">
-				<form th:action="@{/logout}" method="POST">
-					<button class="btn btn-default" type="submit">Logout</button>
-				</form>
-			</div>
-		</nav>
-    </div>
-    <footer th:fragment="footer">
-        <div class="text-center">
-            <small class="text-muted">Simple template footer</small>
-        </div>
-    </footer>
-</body>
-</html>
