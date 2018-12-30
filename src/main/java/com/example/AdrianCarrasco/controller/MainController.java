@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,11 @@ public class MainController {
 	public ModelAndView principal() {
 		ModelAndView mav = new ModelAndView(Constants.HOME);
 		mav.addObject("noticiasModels", noticiaService.listAllNoticias());
+//		Username al controlador (necesito comprobar si hay mejor manera de hacerlo en el tutorial que vi)
+		mav.addObject("username", SecurityContextHolder.getContext().getAuthentication().getName());
+		mav.addObject("permissions", SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		return mav;
 	}
+	
+	
 }

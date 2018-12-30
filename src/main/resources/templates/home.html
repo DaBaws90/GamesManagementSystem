@@ -5,12 +5,20 @@
 </head>
 <body>
 	<div th:replace="base.html :: div-navbar"></div>
-	<div sec:authorize="hasAnyGranted('ADMIN')">
+	
+	<div th:text="${username}"></div>
+	
+	<span sec:authorize="isAuthenticated()">Welcome <span th:text="${username}"></span></span>
+	</br>
+	
+	<div th:text="${permissions}"></div>
+	<div th:if="${permission != ROLE_USER}">
 		<h2>TESTEO HOME</h2>
 	</div>
-	<security:authorize="hasRole('ADMIN')">
-    	This text is only visible to an admin
-    <br/>
-</security:authorize>
+	<th:block sec:authorize="hasRole('ROLE_USER')">
+		<span sec:authorize="hasRole('ROLE_USER')">
+	    	This text is only visible to an admin
+		</span>
+	</th:block>
 </body>
 </html>

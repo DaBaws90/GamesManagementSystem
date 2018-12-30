@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.AdrianCarrasco.model.UserModel;
 import com.example.AdrianCarrasco.service.UserService;
+import constant.Constants;
 
 @Controller
 @RequestMapping("/users")
@@ -39,7 +40,7 @@ public class UserController {
 	
 	@GetMapping("/register")
 	public ModelAndView registerForm() {
-		ModelAndView mav = new ModelAndView("usersAdd");
+		ModelAndView mav = new ModelAndView(Constants.REGISTER_VIEW);
 		mav.addObject("userModel", new UserModel());
 		return mav;
 	}
@@ -49,7 +50,7 @@ public class UserController {
 			RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView();
 		if(bindingResult.hasErrors()) {
-			mav.setViewName("usersAdd");
+			mav.setViewName(Constants.REGISTER_VIEW);
 			return mav;
 		}
 		else {

@@ -49,9 +49,11 @@
 					<!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
 				</div>
 			</div>
-			<form th:action="@{/logout}" method="POST">
-				<button class="btn btn-default" type="submit">Logout</button>
-			</form>
+			<div sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="POST">
+					<button class="btn btn-default" type="submit">Logout</button>
+				</form>
+			</div>
 		</nav>
     </div>
     <footer th:fragment="footer">

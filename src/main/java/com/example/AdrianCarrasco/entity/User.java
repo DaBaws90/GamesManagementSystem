@@ -43,7 +43,7 @@ public class User {
 	@Column(name = "telefono")
 	private String telefono;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)

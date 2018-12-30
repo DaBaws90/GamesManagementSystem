@@ -28,14 +28,14 @@ public class NoticiasController {
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
-		ModelAndView mav = new ModelAndView(Constants.noticiasIndex);
+		ModelAndView mav = new ModelAndView(Constants.NOTICIAS_INDEX);
 		mav.addObject("noticiasModels", noticiaService.listAllNoticias());
 		return mav;
 	}
 	
 	@GetMapping("/details/{id}")
 	public ModelAndView details(@PathVariable(name="id") int id) {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView(Constants.NOTICIAS_DETAILS);
 		mav.addObject("noticiaModel", noticiaService.findById(id));
 		return mav;
 	}
