@@ -44,16 +44,16 @@ public class User {
 	private String telefono;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<UserRole> userRole = new HashSet<>();
+	private Set<UserRole> userRole = new HashSet<UserRole>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<Alquiler> alquileres = new HashSet<>();
+	private Set<Alquiler> alquileres = new HashSet<Alquiler>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<Venta> ventas = new HashSet<>();
+	private Set<Venta> ventas = new HashSet<Venta>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<Participacion> participaciones = new HashSet<>();
+	private Set<Participacion> participaciones = new HashSet<Participacion>();
 
 	public User() {
 		super();

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,16 +12,16 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="user_role")
+@Table(name="user_role2") // Tabla 2 de pruebas
 public class UserRole {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="user_role_id")
 	private int userRoleId;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="username")
+	@ManyToOne(fetch=FetchType.EAGER/*, cascade = CascadeType.ALL*/)
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	@Column(name="role")
@@ -29,10 +30,21 @@ public class UserRole {
 	public UserRole() {
 		super();
 	}
+	
+	public UserRole(String role) {
+		super();
+		this.role = role;
+	}
+	
+	public UserRole(User user, String role) {
+		super();
+		this.user = user;
+		this.role = role;
+	}
 
 	public UserRole(int userRoleId, User user, String role) {
 		super();
-		this.userRoleId = userRoleId; // Puede ser necesario crearlo sin el Id, como en el tutorial
+		this.userRoleId = userRoleId;
 		this.user = user;
 		this.role = role;
 	}

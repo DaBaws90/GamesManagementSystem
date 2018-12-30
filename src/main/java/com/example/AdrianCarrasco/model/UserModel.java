@@ -16,12 +16,12 @@ public class UserModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=10, max=80)
+	@Size(min=5, max=80)
 	private String username;
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=8, max=80)
+	@Size(min=6, max=80)
 	// @Pattern(regexp = "^[a-zA-Z@#$%^&+=](?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}[a-zA-Z0-9]$") # Muy complicado de explicar en el mensaje de validación del formulario
 	private String password;
 	
@@ -29,12 +29,12 @@ public class UserModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=1, max=50)
+	@Size(min=3, max=50)
 	private String nombre;
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=1, max=80)
+	@Size(min=6, max=80)
 	private String apellidos;
 	
 	@NotNull
@@ -45,16 +45,16 @@ public class UserModel {
 		message = "Introduzca un formato de email válido")
 	private String email;
 	
-	@Pattern(regexp = "^[0-9]{9}", message="Formato permitido: 9 dígitos")
+	@Pattern(regexp = "^[0-9]{9}", message="Formato permitido: 9 dígitos, sin guiones")
 	private String telefono;
 	
-	private Set<UserRole> roles = new HashSet<>();
+	private Set<UserRole> roles = new HashSet<UserRole>();
 	
-	private Set<AlquilerModel> alquileresModel = new HashSet<>();
+	private Set<AlquilerModel> alquileresModel = new HashSet<AlquilerModel>();
 	
-	private Set<VentaModel> ventasModel = new HashSet<>();
+	private Set<VentaModel> ventasModel = new HashSet<VentaModel>();
 	
-	private Set<ParticipacionModel> participacionesModel = new HashSet<>();
+	private Set<ParticipacionModel> participacionesModel = new HashSet<ParticipacionModel>();
 
 	public UserModel() {
 		super();

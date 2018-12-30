@@ -6,12 +6,15 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.AdrianCarrasco.converter.UserConverter;
 import com.example.AdrianCarrasco.entity.User;
+import com.example.AdrianCarrasco.entity.UserRole;
 import com.example.AdrianCarrasco.model.UserModel;
 import com.example.AdrianCarrasco.repository.UserJpaRepository;
+import com.example.AdrianCarrasco.repository.UserRoleJpaRepository;
 import com.example.AdrianCarrasco.service.UserService;
 
 @Service("userServiceImpl")
@@ -20,6 +23,10 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	@Qualifier("userJpaRepository")
 	private UserJpaRepository userJpaRepository;
+	
+	@Autowired
+	@Qualifier("userRoleJpaRepository")
+	private UserRoleJpaRepository userRoleJpaRepository;
 	
 	@Autowired
 	@Qualifier("userConverter")
@@ -32,7 +39,28 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User addUser(UserModel userModel) {
-		return userJpaRepository.save(userConverter.transform(userModel));
+//		Generamos un objeto BCrypt para utilizar un algoritmo de cofrado de contraseñas
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//		Ciframos la contraseña del objeto userModel y luego establecemos su atributo pasword con ese valor ante de guardarlo en la base de datos
+		userModel.setPassword(encoder.encode(userModel.getPassword()));
+//		Enabled a true
+		userModel.setEnabled(true);
+//		Lo asigno a objeto "User" para que obtenga un valor de id tras persistirlo en la BD, así puedo aignarle los roles correctamente
+		User user = userJpaRepository.save(userConverter.transform(userModel));
+//		Con cada nuevo registro, asigno rol de usuario convencional y persisto los datos en la tabla role_user
+		userRoleJpaRepository.save(new UserRole(user, "ROLE_USER"));
+//		Devuelvo el objeto "user" que se generó en primera instancia
+		return user;
+		
+//		REALIZAREMOS MEJOR LA COMPROBACION EN EL CONTROLADOR, ASÍ SABRÉ SI EL ERROR ES POR EL EMAIL O POR EL USERNAME, YA QUE NO HABRÁ EVALUACION 
+//		CONDICIONAL DOBLE, ADEMAS PODRÉ REDIRECCIONAR CON MENSAJES DE AYUDA AL USUARIO (dejo la chuletita aquí)
+		
+//		if(checkUsernameAvailability(userModel.getUsername()) && checkEmailAvailability(userModel.getEmail())) {
+//			return userJpaRepository.save(userConverter.transform(userModel));
+//		}
+//		else {
+//			return null;
+//		}
 	}
 
 	@Override
@@ -60,6 +88,11 @@ public class UserServiceImpl implements UserService{
 	@Override // Controlar que no haya usernames repetidos en el sistema
 	public boolean checkUsernameAvailability(String username) {
 		return userJpaRepository.findByUsername(username) == null;
+	}
+	
+	@Override // Controlar que no haya emails repetidos en el sistema
+	public boolean checkEmailAvailability(String email) {
+		return userJpaRepository.findByEmail(email) == null;
 	}
 
 	@Override

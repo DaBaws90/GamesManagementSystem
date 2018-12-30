@@ -14,6 +14,7 @@ public interface UserService {
 	
 	public abstract User disableUser(UserModel userModel);
 	public abstract boolean checkUsernameAvailability(String username);
+	public abstract boolean checkEmailAvailability(String email);
 	
 	public abstract UserModel findById(int id);
 	public abstract UserModel findByUsername(String username);
