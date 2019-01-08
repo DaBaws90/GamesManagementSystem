@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Edit Noticia Page</title>
 </head>
 <body>
-
+	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+	
+	<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
 </body>
 </html>

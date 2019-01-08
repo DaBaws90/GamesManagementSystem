@@ -8,6 +8,7 @@ public class TestCrypt {
 		// TODO Auto-generated method stub
 		BCryptPasswordEncoder passEnc = new BCryptPasswordEncoder();
 		System.out.println(passEnc.encode("user"));
+//		System.out.println(Charset.defaultCharset());
 	}
 
 }

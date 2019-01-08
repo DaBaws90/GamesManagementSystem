@@ -9,8 +9,8 @@ public class MethodLogger {
 
 	private static final Log LOG = LogFactory.getLog(MethodLogger.class);
 
-	public void info(String requestType, String method, String controller, String objectType, String actionType, String data) {
-		LOG.info("METHOD ("+requestType+"): "+method+" FROM "+controller+" ---- "+objectType+" GOING TO BE "+actionType+": "+data);
+	public void info(String requestType, String method, String template, String controller, String object, String actionType, Object data) {
+		LOG.info("METHOD ("+requestType+"): "+method+" ("+template+" view) FROM "+controller+" ---- "+object+" GOING TO BE "+actionType+": "+data.toString());
 //		LOG.info("METHOD (GET): editParticipations (EDIT_VIEW) ---- PARTICIPATION GOING TO BE EDITED: " + participacionService.findById(id));
 	}
 	
@@ -20,5 +20,17 @@ public class MethodLogger {
 	
 	public void regularMessage(String message) {
 		LOG.info(message);
+	}
+	
+	public void validationError() {
+		LOG.info("ERROR IN VALIDATION FIELDS");
+	}
+	
+	public void success(String object, String actionType, Object data) {
+		LOG.info(object + " " + actionType + " SUCCESSFULLY: " + data.toString());
+	}
+	
+	public void unsuccessful(String actionType, String object, Object data) {
+		LOG.info("UNABLE TO " + actionType + " " + object + ": " + data.toString());
 	}
 }

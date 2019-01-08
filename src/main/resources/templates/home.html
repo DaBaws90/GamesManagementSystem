@@ -1,20 +1,65 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
 <title id="pageTitle">Home Page</title>
 </head>
 <body>
-	<div th:insert="fragments/navbar.html :: div-navbar"></div>
+	<div th:insert="fragments/navbar.html :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
 	
-	<span sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name"></span>!</span>
-	</br>
-	
-	<div sec:authorize="hasRole('ROLE_USER')">
-		<h2 class="text-muted">TESTEO HOME</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<div class="card bg-dark text-white">
+  								<img class="card-img" th:src="@{/images/news_carousel.jpg}" alt="Card image">
+  								<div class="card-img-overlay text-center">
+    								<h2 class="card-title mt-4 mb-5">Sección de noticias</h2>
+    								<p class="card-text mt-4">Échale un vistazo a nuestras noticias para mantenerte informado sore todo lo que ocurre en la scene de los videojuegos!</p>
+    								<!-- <p class="card-text">Last updated 3 mins ago</p> -->
+  								</div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="card text-center">
+								<div class="card-header">
+									<h4>Probando 3</h4>
+								</div>
+								<div class="card-body">
+									<p>Noticia de prueba 3</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Previous</span>
+				  	</a>
+				  	<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Next</span>
+				  	</a>
+				</div>
+			
+					<!-- <div th:if="${noticiasModels.isEmpty()}" class="text-center mt-3 flex-container-home">
+						<h5 class="text-muted">There is no articles to show at this moment</h5>
+						<p>Please, come back later to see if we've added some content to our page</p>
+					</div>	 -->
+				
+				<div class="col-md-6">
+				
+				</div>
+			</div>
+		</div>
 	</div>
-	<span sec:authorize="hasRole('ROLE_ADMIN')">
-    	This text is only visible to an admin
-	</span>
-	<div th:replace="fragments/footer.html :: footer"></div>
+
+	<div th:replace="fragments/footer.html :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
 </body>
 </html>

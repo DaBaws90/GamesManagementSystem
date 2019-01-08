@@ -50,7 +50,15 @@ public class NoticiaServiceImpl implements NoticiaService{
 		}
 	}
 
+	@Override
 	public NoticiaModel findById(int id) {
 		return noticiaConverter.entidadModelo(noticiaJpaRepository.findById(id));
 	}
+
+	@Override
+	public NoticiaModel findByTitulo(String titulo) {
+		return noticiaConverter.entidadModelo(noticiaJpaRepository.findByTitulo(titulo));
+	}
+	
+	
 }

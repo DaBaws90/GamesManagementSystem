@@ -1,0 +1,50 @@
+.flex-container-home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 82vh;
+}
+.carousel-item{
+    height: 250px;
+} 
+.carousel-indicators li {
+  background-color: #999;
+  background-color: rgba(70,70,70,.25);
+  border:1px solid #444;
+}
+
+.carousel-indicators .active {
+  background-color: red;
+  border:1px solid #444;
+}
+/* .carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+  outline: black;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-image: none;
+} */
+
+.carousel-control-next-icon:after{
+  content: '>';
+  font-size: 25px;
+  font-weight: bold;
+  color: gray;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 25px;
+  font-weight: bold;
+  color: gray;
+}
+.card-text{
+	color: white;
+	font-weight: bold;
+}
+.card-title{
+	font-style: italic;
+}

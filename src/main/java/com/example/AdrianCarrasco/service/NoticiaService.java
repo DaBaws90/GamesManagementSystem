@@ -11,7 +11,8 @@ public interface NoticiaService {
 	public abstract Noticia addNoticia(NoticiaModel noticiaModel);
 	public abstract Noticia updateNoticia(NoticiaModel noticiaModel);
 	public abstract boolean deleteNoticia(int id);
+	
 	public abstract NoticiaModel findById(int id);
-//	public abstract Noticia findByName(NoticiaModel noticiaModel);
+	public abstract NoticiaModel findByTitulo(String titulo);
 
 }

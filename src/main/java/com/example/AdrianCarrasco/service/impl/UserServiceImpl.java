@@ -51,20 +51,21 @@ public class UserServiceImpl implements UserService{
 		userRoleJpaRepository.save(new UserRole(user, "ROLE_USER"));
 //		Devuelvo el objeto "user" que se generó en primera instancia
 		return user;
-		
-//		REALIZAREMOS MEJOR LA COMPROBACION EN EL CONTROLADOR, ASÍ SABRÉ SI EL ERROR ES POR EL EMAIL O POR EL USERNAME, YA QUE NO HABRÁ EVALUACION 
-//		CONDICIONAL DOBLE, ADEMAS PODRÉ REDIRECCIONAR CON MENSAJES DE AYUDA AL USUARIO (dejo la chuletita aquí)
-		
-//		if(checkUsernameAvailability(userModel.getUsername()) && checkEmailAvailability(userModel.getEmail())) {
-//			return userJpaRepository.save(userConverter.transform(userModel));
-//		}
-//		else {
-//			return null;
-//		}
 	}
 
 	@Override
 	public User updateUser(UserModel userModel) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//		Comprobamos si la contraseña guardada del objeto User almacenado en la base de datos es diferente al objeto DTO del formulario para cifrar 
+//		la contraseña en caso de que haya sido cambiada. Si no es el caso, simplemente guarda el User drectamente sin cifrar la contraseña primero.
+		String oldPass = userJpaRepository.findById(userModel.getId()).getPassword();
+		if(!encoder.matches(userModel.getPassword(), oldPass)) {
+			userModel.setPassword(encoder.encode(userModel.getPassword()));
+		}
+		else {
+			userModel.setPassword(oldPass);
+		}
+		userModel.setEnabled(true);
 		return userJpaRepository.save(userConverter.transform(userModel));
 	}
 
@@ -80,9 +81,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User disableUser(UserModel userModel) {
-		userModel.setEnabled(false);
-		return userJpaRepository.save(userConverter.transform(userModel));
+	public User disableUser(int id) {
+		if(userJpaRepository.findById(id) != null) {
+			UserModel userModel = userConverter.transform(userJpaRepository.findById(id));
+			userModel.setEnabled(false);
+			return userJpaRepository.save(userConverter.transform(userModel));
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override // Controlar que no haya usernames repetidos en el sistema
@@ -103,6 +110,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserModel findByUsername(String username) {
 		return userConverter.transform(userJpaRepository.findByUsername(username));
+	}
+
+	@Override
+	public List<UserModel> listNotDisableUsers() {
+		List<UserModel> enabledUsers = new ArrayList<UserModel>();
+		for(User user : userJpaRepository.findAll()) {
+			if(user.isEnabled()) {
+				enabledUsers.add(userConverter.transform(user));
+			}
+		}
+		return enabledUsers; 
 	}
 
 	

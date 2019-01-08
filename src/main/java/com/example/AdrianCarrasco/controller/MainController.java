@@ -1,5 +1,7 @@
 package com.example.AdrianCarrasco.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.AdrianCarrasco.component.MethodLogger;
+import com.example.AdrianCarrasco.model.NoticiaModel;
 import com.example.AdrianCarrasco.service.NoticiaService;
 
 import constant.Constants;
@@ -34,9 +37,10 @@ public class MainController {
 	@GetMapping("/index")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView(Constants.HOME);
-		mav.addObject("noticiasModels", noticiaService.listAllNoticias());
-		logger.info("GET", "index", "MainController", "NOTICIAS", "RETRIEVED", noticiaService.listAllNoticias().toString());
-//		mav.addObject("username", SecurityContextHolder.getContext().getAuthentication().getName());
+		List<NoticiaModel> noticiasModels = noticiaService.listAllNoticias();
+		mav.addObject("noticiasModels", noticiasModels);
+//		logger.info("GET", "index", "HOME view", "MainController", "NOTICIAS", "RETRIEVED", "List<NoticiaModel> noticiasModel");
+		logger.info("GET", "index", "HOME view", "MainController", "NOTICIAS", "RETRIEVED", noticiasModels.toString());
 		return mav;
 	}
 	

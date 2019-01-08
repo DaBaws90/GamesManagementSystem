@@ -9,8 +9,6 @@ import com.example.AdrianCarrasco.entity.Noticia;
 
 @Repository("noticiaJpaRepository")
 public interface NoticiaJpaRepository extends JpaRepository<Noticia, Serializable>{
-	
-	public abstract Noticia findByTitulo(String titulo);
 	public abstract Noticia findById(int id);
-	
+	public abstract Noticia findByTitulo(String titulo);
 }

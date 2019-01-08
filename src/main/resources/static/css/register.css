@@ -1,0 +1,12 @@
+.flex-container-register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 75vh;
+}
+.flex-container-unableToRegister{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 85vh;
+}

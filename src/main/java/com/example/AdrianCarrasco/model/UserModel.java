@@ -21,7 +21,7 @@ public class UserModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=6, max=80)
+	@Size(min=4, max=80)
 	// @Pattern(regexp = "^[a-zA-Z@#$%^&+=](?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}[a-zA-Z0-9]$") # Muy complicado de explicar en el mensaje de validación del formulario
 	private String password;
 	

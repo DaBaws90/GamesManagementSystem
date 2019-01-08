@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Profile Page</title>
+</head>
+<body>
+	<div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Game S.L.</h3>
+            </div>
+
+            <ul class="list-unstyled components profile">
+                <p><span sec:authentication="principal.username"></span>'s profile</p>
+                <li class="active">
+                	<a th:href="@{/home/}">Home</a>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle profile">Go to</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="@{/juegos}">Juegos</a>
+                        </li>
+                        <li>
+                            <a href="@{/competiciones}">Torneos</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                    <a th:href="@{/users/editUser}">Editar perfil</a>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <form th:action="@{/logout}" method="POST" class="article">
+                    	<button type="submit" class="btn btn-default btn-block">
+                    		<i class="fas fa-sign-out-alt"></i> Log out
+                    	</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-profile">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="navbar-btn profile">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+                    
+                </div>
+            </nav>
+            
+            <div th:if="${edited == 1}" class="alert alert-info text-center">Se ha editado su perfil con éxito</div>
+            
+            <div class="text-center">
+            	<h2 class="mb-5">Bienvenido a tu perfil, <span sec:authentication="principal.username">!</span></h2>
+	            <h5 class="text-muted">Aquí podrás editar tu perfil y consultar tus alquileres, tus compras y los torneos en los que has participado hasta la fecha.</h5>
+			</div>
+			
+            <!-- <div th:if="${edited == 1}" class="alert alert-info text-center mt-3">Se ha editado su perfil con éxito</div> -->
+
+            <div class="line"></div>
+
+			<div class="text-center">
+	            <h3>Alquileres recientes</h3>
+	            
+	            <div th:if="${alquileresModel.isEmpty()}">
+	            	<p>No records found</p>
+	            </div>
+	            
+	            <div th:if="${!alquileresModel.isEmpty()}">
+	            	<table class="table table-dark">
+	            		<thead>
+							<tr scope="row">
+								<th scope="col">Juego</th>
+								<th scope="col">Fecha</th>
+								<th scope="col">Devolución</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr scope="row" th:each="alquiler : ${alquileresModel}">
+								<td th:text="${alquiler.getJuegoModel().getTitulo()}"></td>
+								<td><span th:text="${alquiler.fechaAlquiler}"></span></td>
+								<td><span th:text="${alquiler.fechaDevolucion}"></span></td>
+							</tr>
+						</tbody>
+	            	</table>
+	            </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="text-center">
+	            <h3>Compras recientes</h3>
+	            
+	            <div th:if="${ventasModel.isEmpty()}">
+	            	<p>No records found</p>
+	            </div>
+	            
+	            <div th:if="${!ventasModel.isEmpty()}">
+	            	<table class="table table-dark">
+	            		<thead>
+							<tr scope="row">
+								<th scope="col">Juego</th>
+								<th scope="col">Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr scope="row" th:each="compra : ${ventasModel}">
+								<td th:text="${compra.getJuegoModel().getTitulo()}"></td>
+								<td><span th:text="${compra.fecha}">Fecha</span></td>
+							</tr>
+						</tbody>
+	            	</table>
+	            </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="text-center">
+	            <h3>Competiciones recientes</h3>
+	            
+	            <div th:if="${participacionesModel.isEmpty()}">
+	            	<p>No records found</p>
+	            </div>
+	            
+	            <div th:if="${!participacionesModel.isEmpty()}">
+	            	<table class="table table-dark">
+	            		<thead>
+							<tr scope="row">
+								<th scope="col">Nombre</th>
+								<th scope="col">Fecha</th>
+								<th scope="col">Lugar</th>
+								<th scope="col">Juego</th>
+								<th scope="col">Posición</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr scope="row" th:each="torneo : ${participacionesModel}">
+								<td th:text="${torneo.getCompeticion().getNombre()}"></td>
+								<td th:text="${torneo.getCompeticion().getFecha()}"></td>
+								<td th:text="${torneo.getCompeticion().getLugar()}"></td>
+								<td th:text="${torneo.getCompeticion().getJuego().getTitulo()}"></td>
+								<td th:text="${torneo.posicion != null} ? ${torneo.posicion} : '-'"></td>
+							</tr>
+						</tbody>
+	            	</table>
+	            </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+</body>
+</html>
