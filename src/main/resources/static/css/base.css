@@ -5,3 +5,7 @@
 .container-fluid{
 	padding: 0;
 }
+#footer, #footer-admin{
+	background-color: black;
+	color: white;
+}
