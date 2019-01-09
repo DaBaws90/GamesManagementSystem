@@ -44,7 +44,7 @@ public class JuegoModel {
 	private boolean comprado;
 	
 	@NotNull
-	@Digits(fraction=2,integer=2) 
+	@Digits(fraction=2, integer=2) 
 	private float precio;
 //	@DecimalMin(value = "0.01", inclusive = true)
 //	private BigDecimal precio;

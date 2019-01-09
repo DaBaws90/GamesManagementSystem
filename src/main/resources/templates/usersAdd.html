@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div th:insert="fragments/navbar.html :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
-		<div class="container mt-5" sec:authorize="!isAuthenticated()">
+		<div class="container mt-5 flex-container-register" sec:authorize="!isAuthenticated()">
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 					<div class="text-center">

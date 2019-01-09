@@ -1,0 +1,35 @@
+.flex-container-editNoticia{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 86vh;
+}
+/* .flex-container-noticiaIndex{ UNUSED
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    height: 70vh !important;
+} */
+
+.flex-container-noticiaAdd{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 86vh;
+}
+.flex-container-noticiasDetails{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 86vh;
+}
+
+.flex-container-register{
+    min-height: 78.5vh;
+}
+.flex-container-unableToRegister{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 86vh;
+}

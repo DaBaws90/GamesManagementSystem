@@ -7,6 +7,25 @@
 <body>
 	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
 	
+	<div class="container flex-container-noticiasDetails">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="text-center">
+					<h3 th:text="${noticiaModel.titulo}"></h3>
+					<p class="mt-5" th:text="${noticiaModel.contenido}"></p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="text-center">
+					<a class="mt-5" th:href="@{'/home/'}"><i class="fas fa-home"></i> Volver al inicio</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
 </body>
 </html>

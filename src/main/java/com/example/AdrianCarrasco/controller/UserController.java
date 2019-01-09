@@ -50,7 +50,7 @@ public class UserController {
 	public ModelAndView index() {
 //		Asigno a una lista la llamada al servicio para recuperar todos los usuarios, de este modo solo realizao la consulta a la base de datos una vez
 		List<UserModel> usersModel = userService.listAllUsers();
-//		logger
+		logger.info("GET", "index", "USERS_INDEX", "UserController", "USERS", "RETRIEVED", "List<UserModel> usersModel");
 		return new ModelAndView(Constants.USERS_INDEX).addObject("usersModel", usersModel);
 	}
 	
@@ -150,16 +150,17 @@ public class UserController {
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteUser(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/users/index");
-		UserModel temp = userService.findById(id);
-		logger.info("GET", "deleteUser", "USERS_INDEX", "UserController", "USER", "DELETED", temp);
+		UserModel userModel = userService.findById(id);
+		String username = userModel.getUsername();
+		logger.info("GET", "deleteUser", "USERS_INDEX", "UserController", "USER", "DELETED", userModel);
 		if(userService.deleteUser(id)) {
 			redirectAttributes.addFlashAttribute("deleted", 1);
-			redirectAttributes.addFlashAttribute("username", temp.getUsername());
-			logger.success("USER", "DELETED", temp);
+			redirectAttributes.addFlashAttribute("username", username);
+			logger.success("USER", "DELETED", userModel);
 		}
 		else {
 			redirectAttributes.addFlashAttribute("deleted", 0);
-			logger.unsuccessful("DELETE", "USER", temp);
+			logger.unsuccessful("DELETE", "USER", username);
 		}
 		return mav;
 	}

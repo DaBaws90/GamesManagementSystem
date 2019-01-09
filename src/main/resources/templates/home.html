@@ -28,10 +28,10 @@
 						<div class="carousel-inner">
 							<div class="carousel-item active">
 								<div class="card bg-dark text-white">
-	  								<img class="card-img" th:src="@{/images/news_carousel.jpg}" alt="Card image">
+	  								<img class="card-img" th:src="@{/images/news_carousel.jpg}" alt="Carousel first image">
 	  								<div class="card-img-overlay text-center">
-	    								<h2 class="card-title mt-4 mb-5">News section</h2>
-	    								<p class="card-text mt-4">Keep yourself on track of the upcoming videogames, tournaments and much more with our rcent news!</p>
+	    								<h2 class="card-title mt-4 mb-5 newsFont">News section</h2>
+	    								<p class="card-text mt-4 newsFont">Keep yourself on track of the upcoming videogames, tournaments and much more with our rcent news!</p>
 	    								<!-- <p class="card-text">Last updated 3 mins ago</p> -->
 	  								</div>
 								</div>
@@ -44,8 +44,8 @@
 									<div class="card-body">
 										<p th:text="${noticia.descripcion}"></p>
 									</div>
-									<div class="card-body">
-										<a th:action="@{'/noticias/details/' + ${noticia.id}}" class="btn btn-success"><i class="fas fa-search"></i> Ver contenido</a>
+									<div class="card-body link">
+										<a th:href="@{'/noticias/details/' + ${noticia.id}}" class="btn btn-success"><i class="fas fa-search"></i> Ver contenido</a>
 									</div>
 								</div>
 							</div>

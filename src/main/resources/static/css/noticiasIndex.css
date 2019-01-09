@@ -1,6 +1,18 @@
-.flex-container-noticiasIndex{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 65vh;
+/* .noticiasTableIndex td{
+	vertical-align:middle;
+	text-align: center;
+}
+
+.noticiasTableIndex th{
+	vertical-align:middle;
+	text-align: center;
+}
+
+.noticiasTableIndex {
+	border: 2px solid orange;
+	color: orange;
+} */
+
+.noticiasIndexFooter{
+	position: absolute;
 }

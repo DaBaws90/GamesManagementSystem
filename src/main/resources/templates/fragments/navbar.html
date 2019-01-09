@@ -23,6 +23,17 @@
 				</li>
 			</ul>
 			
+			<div class="nav-item dropdown" sec:authorize="!isAuthenticated()">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span>Hello, guest!<span>
+				</a>
+				<div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/login}">Log in</a>
+				<div class="dropdown-divider"></div>
+					<a class="dropdown-item" th:href="@{/users/register}">Sign up</a>
+				</div>
+			</div>
+			
 			<div class="nav-item dropdown" sec:authorize="isAuthenticated()">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span>Hello, <span sec:authentication="principal.username"></span>!<span>
@@ -31,7 +42,7 @@
 					<a class="dropdown-item" th:href="@{/users/profile}">Perfil</a>
 				<div class="dropdown-divider"></div>
 					<form th:action="@{/logout}" method="POST">
-						<button class="btn btn-default btn-block" type="submit">
+						<button class="btn btn-light btn-block" type="submit">
 							<i class="fas fa-sign-out-alt"></i> Logout
 						</button>
 					</form>

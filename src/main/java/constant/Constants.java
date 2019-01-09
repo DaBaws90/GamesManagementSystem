@@ -23,5 +23,10 @@ public class Constants {
 	public static final String JUEGOS_DETAILS = "";
 	public static final String JUEGOS_ADD = "";
 	public static final String JUEGOS_EDIT = "";
+	
+//	Categorias templates
+	public static final String CATEGORIAS_INDEX = "categoriasIndex";
+	public static final String CATEGORIAS_ADD = "categoriasAdd";
+	public static final String CATEGORIAS_EDIT = "categoriasEdit";
 
 }

@@ -5,8 +5,13 @@
     height: 82vh;
 }
 .carousel-item{
-    height: 250px;
+    height: 300px;
 } 
+
+.carousel-item img{
+	height: 250px;	
+}
+
 .carousel-indicators li {
   background-color: #999;
   background-color: rgba(70,70,70,.25);
@@ -28,19 +33,26 @@
   background-image: none;
 } */
 
-.carousel-control-next-icon:after{
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='orange' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='orange' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+/* .carousel-control-next-icon:after{
   content: '>';
   font-size: 25px;
   font-weight: bold;
-  color: gray;
+  color: orange;
 }
 
 .carousel-control-prev-icon:after {
   content: '<';
   font-size: 25px;
   font-weight: bold;
-  color: gray;
-}
+  color: orange;
+} */
 
 .card-text{
 	color: white;
@@ -50,6 +62,14 @@
 
 .card-title{
 	font-style: italic;
+}
+
+.card{
+	height: 250px;
+}
+
+.card-body.link{
+	height: 83px;
 }
 
 .background{
@@ -66,4 +86,9 @@
 	font-style: italic;
 	/* border: 1px solid orange;
 	background-image: linear-gradient(to right, red, white 65%); */
+}
+
+.newsFont{
+	text-shadow: 2px 2px gray;
+	color: white;
 }

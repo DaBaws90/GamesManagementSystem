@@ -219,3 +219,20 @@ a.article, a.article:hover {
     }
 
 }
+
+.fa-home{
+    position: absolute;
+    left: 215px;
+    top: 24%;
+
+}
+
+.fa-pencil-alt{
+	position: absolute;
+    left: 215px;
+    top: 36%;
+}
+
+.btn-logOut{
+	background-color: #6878ba;
+}

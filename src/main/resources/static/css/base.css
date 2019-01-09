@@ -5,7 +5,39 @@
 .container-fluid{
 	padding: 0;
 }
+
 #footer, #footer-admin{
 	background-color: black;
 	color: white;
+	/* position: absolute; */
+	bottom: 0;
+	width: 100%;
+}
+
+html{
+	min-height: 100%;
+	position: relative;
+}
+
+.table.table-dark td{
+	vertical-align:middle;
+	text-align: center;
+}
+
+.table.table-dark td a{
+	color: orange;
+}
+
+.table.table-dark td a:hover{
+	color: gray;
+}
+
+.table.table-dark th{
+	vertical-align:middle;
+	text-align: center;
+}
+
+.table.table-dark {
+	border: 2px solid orange;
+	color: orange;
 }

@@ -15,12 +15,12 @@ public class NoticiaModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=80, max=200)
+	@Size(min=40, max=200)
 	private String descripcion;
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=250, max=1000)
+	@Size(min=150, max=1000)
 	private String contenido;
 
 	public NoticiaModel() {

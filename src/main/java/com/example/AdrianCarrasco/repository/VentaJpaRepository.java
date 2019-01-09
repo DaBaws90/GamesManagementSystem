@@ -14,7 +14,8 @@ import com.example.AdrianCarrasco.entity.Venta;
 @Repository("ventaJpaRepository")
 public interface VentaJpaRepository extends JpaRepository<Venta, Serializable>{
 //	public abstract Page<Venta> findAll(Pageable pageable);
+	public abstract Venta findById(int id);
 	public abstract List<Venta> findAllByFecha(Date fecha);
 	public abstract Venta findByJuego(Juego juego);
-	public abstract List<User> findByUser(User user);
+	public abstract List<Venta> findAllByUser(User user);
 }
