@@ -220,14 +220,14 @@ a.article, a.article:hover {
 
 }
 
-.fa-home{
+.fa-home.profile{
     position: absolute;
     left: 215px;
     top: 24%;
 
 }
 
-.fa-pencil-alt{
+.fa-pencil-alt.profile{
 	position: absolute;
     left: 215px;
     top: 36%;

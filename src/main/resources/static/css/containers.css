@@ -1,3 +1,12 @@
+.flex-container-login{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    height: 86vh !important;
+    /* align-content: center;
+    align-items: center; */
+}
+
 .flex-container-editNoticia{
     display: flex;
     flex-direction: column;

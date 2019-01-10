@@ -39,5 +39,5 @@ html{
 
 .table.table-dark {
 	border: 2px solid orange;
-	color: orange;
+	/* color: orange; */
 }

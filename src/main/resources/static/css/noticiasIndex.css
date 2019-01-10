@@ -1,18 +1,3 @@
-/* .noticiasTableIndex td{
-	vertical-align:middle;
-	text-align: center;
-}
-
-.noticiasTableIndex th{
-	vertical-align:middle;
-	text-align: center;
-}
-
-.noticiasTableIndex {
-	border: 2px solid orange;
-	color: orange;
-} */
-
 .noticiasIndexFooter{
-	position: absolute;
+	/* position: absolute; */
 }
