@@ -59,7 +59,12 @@ public class CategoriaServiceImpl implements CategoriaService{
 
 	@Override
 	public CategoriaModel findByNombre(String nombre) {
-		return categoriaConverter.transform(categoriaJpaRepository.findByNombre(nombre));
+		if(categoriaJpaRepository.findByNombre(nombre) != null) {
+			return categoriaConverter.transform(categoriaJpaRepository.findByNombre(nombre));
+		}
+		else {
+			return null;
+		}
 	}
 	
 	

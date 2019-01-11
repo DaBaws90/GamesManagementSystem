@@ -28,5 +28,10 @@ public class Constants {
 	public static final String CATEGORIAS_INDEX = "categoriasIndex";
 	public static final String CATEGORIAS_ADD = "categoriasAdd";
 	public static final String CATEGORIAS_EDIT = "categoriasEdit";
+	
+//	Plataformas templates
+	public static final String PLATAFORMAS_INDEX = "plataformasIndex";
+	public static final String PLATAFORMAS_ADD = "plataformasAdd";
+	public static final String PLATAFORMAS_EDIT = "plataformasEdit";
 
 }

@@ -13,7 +13,7 @@ public class PlataformaModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=3, max=80)
+	@Size(min=2, max=80)
 	private String nombre;
 	
 	private Set<JuegoModel> juegosModels = new HashSet<>();

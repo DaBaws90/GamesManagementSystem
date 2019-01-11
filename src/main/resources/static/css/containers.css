@@ -8,23 +8,24 @@
 }
 
 .flex-container-editNoticia{
-    display: flex;
+   /*  display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 86vh;
+    justify-content: center; */
+    min-height: 86vh;
 }
-/* .flex-container-noticiaIndex{ UNUSED
+.flex-container-newsIndex{
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    height: 70vh !important;
-} */
+    max-height: 66vh !important;
+    min-height: 50vh !important;
+} 
 
 .flex-container-noticiaAdd{
-	display: flex;
+	/* display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 86vh;
+    justify-content: center; */
+    min-height: 86vh;
 }
 .flex-container-noticiasDetails{
 	display: flex;
@@ -38,6 +39,28 @@
 }
 .flex-container-unableToRegister{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 86vh;
+}
+
+.flex-container-categoriesIndex{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 66vh !important;
+    min-height: 50vh !important;
+}
+
+.flex-container-addCategory{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 76.3vh;
+}
+
+.flex-container-addPlataforma{
+	display: flex;
     flex-direction: column;
     justify-content: center;
     height: 86vh;

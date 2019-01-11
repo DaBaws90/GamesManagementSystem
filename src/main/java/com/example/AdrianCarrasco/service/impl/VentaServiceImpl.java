@@ -66,7 +66,12 @@ public class VentaServiceImpl implements VentaService{
 
 	@Override
 	public VentaModel findByJuego(Juego juego) {
-		return ventaConverter.transform(ventaJpaRepository.findByJuego(juego));
+		if(ventaJpaRepository.findByJuego(juego) != null) {
+			return ventaConverter.transform(ventaJpaRepository.findByJuego(juego));
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

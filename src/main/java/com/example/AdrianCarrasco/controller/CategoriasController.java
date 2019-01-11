@@ -109,17 +109,17 @@ public class CategoriasController {
 				if(categoriaService.addCategory(categoriaModel) != null) {
 					logger.success("CATEGORIA", "ADDED", categoriaModel);
 					mav.setViewName("redirect:/categorias/index");
-					redirectAttributes.addFlashAttribute("added", 1);
+					redirectAttributes.addFlashAttribute("insert", 1);
 				}
 				else {
 					logger.unsuccessful("ADD", "CATEGORIA", categoriaModel);
 					mav.setViewName("redirect:/categorias/addCategory/");
-					redirectAttributes.addFlashAttribute("added", 0);
+					redirectAttributes.addFlashAttribute("insert", 0);
 				}
 			}
 			else {
 				logger.regularMessage("CATEGORIA ALREADY EXIST");
-				mav.setViewName("redirect:/categorias/addCategory/");
+				mav.setViewName("redirect:/categorias/addCategory");
 				redirectAttributes.addFlashAttribute("exists", 1);
 			}
 		}
@@ -128,7 +128,7 @@ public class CategoriasController {
 	
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteCategory(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
-		ModelAndView mav = new ModelAndView(Constants.CATEGORIAS_INDEX);
+		ModelAndView mav = new ModelAndView("redirect:/categorias/index");
 		String categoriaModel = categoriaService.findById(id).toString();
 		logger.info("POST", "deleteCategory", "CATEGORIAS_INDEX", "CategoriasController", "CATEGORIA", "DELETED", categoriaModel);
 		if(categoriaService.deleteCategory(id)) {

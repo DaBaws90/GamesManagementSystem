@@ -13,7 +13,7 @@ public class CategoriaModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=3, max=80)
+	@Size(min=2, max=80)
 	private String nombre;
 	
 	private Set<JuegoModel> juegosModel = new HashSet<>();

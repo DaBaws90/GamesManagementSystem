@@ -2,24 +2,24 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments/head.html :: headerfiles">
 <meta charset="UTF-8">
-<title id="pageTitle">Add Category Page</title>
+<title id="pageTitle">Add Platform Page</title>
 </head>
 <body>
 	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
 	
-	<div class="container">
+	<div class="container flex-container-addPlataforma">
 		<div class="row">
 			<div class="col-md-8 offset-md-2 mt-5">
 				<div class="text-center">
-					<h2>Añadir categoría</h2>
+					<h2>Añadir plataforma</h2>
 				</div>
 			</div>
 		</div>
 		
-		<div class="row flex-container-addCategory">
+		<div class="row flex-container-newsIndex flex-container-addCategory">
 			<div class="col-md-8 offset-md-2 mt-5">
 				<div class="text-center">
-					<form th:action="@{/categorias/insert}" th:object="${categoriaModel}" method="POST">
+					<form th:action="@{/plataformas/insert}" th:object="${plataformaModel}" method="POST">
 						<!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
 						
 						<div class="form-group row">
@@ -27,14 +27,14 @@
 							<div class="col-md-10">
 								<input class="form-control" type="text" th:field="*{nombre}"/>
 								<p class="text-center alert alert-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
-								<div class="text-center alert alert-danger" th:if="${exists == 1}">La categoría introducida ya existe</div>
+								<div class="text-center alert alert-danger" th:if="${exists == 1}">La plataforma introducida ya existe</div>
 							</div>
 						</div>
 						
 						<div class="form-group row">
 							<div class="col-md-12 text-center">
 								<button type="submit" class="btn btn-primary mt-3 mb-5">Añadir</button>
-								<a class="float-left mt-4" th:href="@{'/categorias/'}"><i class="fas fa-chevron-left"> </i> Atrás</a>
+								<a class="float-left mt-4" th:href="@{'/plataformas/'}"><i class="fas fa-chevron-left"> </i> Atrás</a>
 							</div>
 						</div>
 						
@@ -45,7 +45,7 @@
 			
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
-					<div class="alert alert-danger text-center" th:if="${insert == 0}">No se pudo añadir la categoría</div>
+					<div class="alert alert-danger text-center" th:if="${insert == 0}">No se pudo añadir la plataforma</div>
 				</div>
 			</div>
 		</div>

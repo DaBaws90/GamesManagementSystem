@@ -49,9 +49,9 @@ public class UserController {
 	@GetMapping("/index")
 	public ModelAndView index() {
 //		Asigno a una lista la llamada al servicio para recuperar todos los usuarios, de este modo solo realizao la consulta a la base de datos una vez
-		List<UserModel> usersModel = userService.listAllUsers();
-		logger.info("GET", "index", "USERS_INDEX", "UserController", "USERS", "RETRIEVED", "List<UserModel> usersModel");
-		return new ModelAndView(Constants.USERS_INDEX).addObject("usersModel", usersModel);
+		List<UserModel> usersModels = userService.listAllUsers();
+		logger.info("GET", "index", "USERS_INDEX", "UserController", "USERS", "RETRIEVED", "List<UserModel> usersModels");
+		return new ModelAndView(Constants.USERS_INDEX).addObject("usersModels", usersModels);
 	}
 	
 //	Parametro opcional para que el mismo metodo sea reutilizable, tanto para el admin como para el usuario. Si admin está logueado, enviará el id para
@@ -133,16 +133,17 @@ public class UserController {
 	@GetMapping("/disable/{id}")
 	public ModelAndView disableUser(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/users/index");
-		UserModel temp = userService.findById(id);
-		logger.info("GET", "disableUser", "USERS_INDEX", "UserController", "USER", "DISABLE", temp);
+		UserModel userModel = userService.findById(id);
+		logger.info("GET", "disableUser", "USERS_INDEX", "UserController", "USER", "DISABLE", userModel);
 		if(userService.disableUser(id) != null) {
 			redirectAttributes.addFlashAttribute("disabled", 1);
-			redirectAttributes.addFlashAttribute("username", temp.getUsername());
-			logger.success("USER", "DISABLED", temp);
+			redirectAttributes.addFlashAttribute("username", userModel.getUsername());
+			logger.success("USER", "DISABLED", userModel);
 		}
 		else {
 			redirectAttributes.addFlashAttribute("disabled", 0);
-			logger.unsuccessful("DISABLE", "USER", temp);
+			redirectAttributes.addFlashAttribute("username", userModel.getUsername());
+			logger.unsuccessful("DISABLE", "USER", userModel);
 		}
 		return mav;
 	}
