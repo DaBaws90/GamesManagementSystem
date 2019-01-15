@@ -18,4 +18,12 @@ public class JuegoConverter {
 	public Juego transform(JuegoModel juegoModel) {
 		return dozer.map(juegoModel, Juego.class);
 	}
+	
+//	public JuegoModel transform(Juego juego) {
+//		return dozer.map(juego, JuegoModel.class);
+//	}
+//	
+//	public Juego transform(JuegoModel juegoModel) {
+//		return dozer.map(juegoModel, Juego.class);
+//	}
 }

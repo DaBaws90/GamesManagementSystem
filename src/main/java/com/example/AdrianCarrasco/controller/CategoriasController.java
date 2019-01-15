@@ -49,11 +49,10 @@ public class CategoriasController {
 	}
 	
 	@GetMapping("/editCategory/{id}")
-	public ModelAndView editCategoryForm(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
+	public ModelAndView editCategoryForm(@PathVariable(name = "id") int id) {
 		ModelAndView mav = new ModelAndView(Constants.CATEGORIAS_EDIT);
 		CategoriaModel categoriaModel = categoriaService.findById(id);
 		logger.info("GET", "editCategoryForm", "CATEGORIAS_EDIT", "CategoriasController", "CATEGORIA", "EDITED", categoriaModel);
-//		List<JuegoModel> juegosModels = 
 		mav.addObject("categoriaModel", categoriaModel);
 		return mav;
 	}
@@ -107,13 +106,13 @@ public class CategoriasController {
 		else {
 			if(categoriaService.findByNombre(categoriaModel.getNombre()) == null) {
 				if(categoriaService.addCategory(categoriaModel) != null) {
-					logger.success("CATEGORIA", "ADDED", categoriaModel);
+					logger.success("CATEGORIA", "INSERTED", categoriaModel);
 					mav.setViewName("redirect:/categorias/index");
 					redirectAttributes.addFlashAttribute("insert", 1);
 				}
 				else {
-					logger.unsuccessful("ADD", "CATEGORIA", categoriaModel);
-					mav.setViewName("redirect:/categorias/addCategory/");
+					logger.unsuccessful("INSERT", "CATEGORIA", categoriaModel);
+					mav.setViewName("redirect:/categorias/addCategory");
 					redirectAttributes.addFlashAttribute("insert", 0);
 				}
 			}

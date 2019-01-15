@@ -21,6 +21,14 @@
 				<li class="nav-item">
 					<a class="nav-link" th:href="@{'/competiciones/'}">Torneos</a>
 				</li>
+				
+				<li sec:authorize="isAuthenticated()" class="nav-item">
+					<a class="nav-link" th:href="@{'/participaciones/'}">Participaciones</a>
+				</li>
+				
+				<!-- <li class="nav-item">
+					<a class="nav-link" th:href="@{'/juegos/'}">Juegos</a>
+				</li> -->
 			</ul>
 			
 			<div class="nav-item dropdown" sec:authorize="!isAuthenticated()">

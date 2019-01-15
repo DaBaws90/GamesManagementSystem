@@ -57,7 +57,7 @@ public class UserController {
 //	Parametro opcional para que el mismo metodo sea reutilizable, tanto para el admin como para el usuario. Si admin está logueado, enviará el id para
 //	editar ese usuario, si un usuario está logueado, al hacer clikck en editar perfil, llamará a este método pero sin el id, por lo que inyectaremos el usuario correspondiente.
 	@GetMapping("/editUser")
-	public ModelAndView editUserForm(@RequestParam(name = "id", required = false) Integer id, RedirectAttributes redirectAttributes) {
+	public ModelAndView editUserForm(@RequestParam(name = "id", required = false) Integer id) {
 		ModelAndView mav = new ModelAndView(Constants.USERS_EDIT);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		boolean condition = Arrays.asList(auth.getAuthorities()).contains("ROLE_ADMIN");
@@ -217,9 +217,9 @@ public class UserController {
 		logger.info("GET", "profile", "USERS_PROFILE", "UserController", "USER", "REDIRECTED TO HIS PROFILE", userModel);
 //		logger.regularMessage("USER '" + userModel.getUsername() + "' REDIRECTED TO HIS PROFILE (PROFILE_VIEW)");
 		mav.addObject("userModel", userModel);
-		mav.addObject("participacionesModel", userModel.getParticipacionesModel());
-		mav.addObject("alquileresModel", userModel.getAlquileresModel());
-		mav.addObject("ventasModel", userModel.getVentasModel());
+		mav.addObject("participacionesModel", userModel.getParticipaciones());
+		mav.addObject("alquileresModel", userModel.getAlquileres());
+		mav.addObject("ventasModel", userModel.getVentas());
 		return mav;
 	}
 }

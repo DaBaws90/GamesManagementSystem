@@ -24,7 +24,7 @@ public class Juego {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_juego")
+	@Column(name = "id")
 	private int id;
 	
 	@Column(name = "titulo")
@@ -56,25 +56,25 @@ public class Juego {
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "juego_categoria",
-			joinColumns = @JoinColumn(name = "id_juego"),
-			inverseJoinColumns = @JoinColumn(name = "id_categoria"))
-	private Set<Categoria> categorias = new HashSet<>();
+			joinColumns = @JoinColumn(name = "idjuego"),
+			inverseJoinColumns = @JoinColumn(name = "idcategoria"))
+	private Set<Categoria> categorias = new HashSet<Categoria>();
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
 	@JoinTable(name = "juego_plataforma",
-			joinColumns = @JoinColumn(name = "id_juego"),
-			inverseJoinColumns = @JoinColumn(name = "id_plataforma"))
-	private Set<Plataforma> plataformas = new HashSet<>();
+			joinColumns = @JoinColumn(name = "idjuego"),
+			inverseJoinColumns = @JoinColumn(name = "idplataforma"))
+	private Set<Plataforma> plataformas = new HashSet<Plataforma>();
 	
 	@OneToMany(mappedBy = "juego", cascade = CascadeType.REMOVE)
-	private Set<Alquiler> alquileres = new HashSet<>();
+	private Set<Alquiler> alquileres = new HashSet<Alquiler>();
 	
 	@OneToOne(mappedBy = "juego", cascade = CascadeType.REMOVE, // Podría ser ALL si fallase
-			fetch = FetchType.EAGER) //, optional = false)
+			fetch = FetchType.EAGER)
 	private Venta venta;
 
-	@OneToMany(mappedBy = "juego", cascade = CascadeType.REMOVE)
-	private Set<Competicion> competiciones = new HashSet<>();
+	@OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Competicion> competiciones = new HashSet<Competicion>();
 
 	public Juego() {
 		super();

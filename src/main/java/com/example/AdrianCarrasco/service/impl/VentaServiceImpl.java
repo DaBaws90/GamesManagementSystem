@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.example.AdrianCarrasco.converter.JuegoConverter;
+import com.example.AdrianCarrasco.converter.UserConverter;
 import com.example.AdrianCarrasco.converter.VentaConverter;
-import com.example.AdrianCarrasco.entity.Juego;
-import com.example.AdrianCarrasco.entity.User;
 import com.example.AdrianCarrasco.entity.Venta;
+import com.example.AdrianCarrasco.model.JuegoModel;
+import com.example.AdrianCarrasco.model.UserModel;
 import com.example.AdrianCarrasco.model.VentaModel;
 import com.example.AdrianCarrasco.repository.VentaJpaRepository;
 import com.example.AdrianCarrasco.service.VentaService;
@@ -27,6 +29,14 @@ public class VentaServiceImpl implements VentaService{
 	@Autowired
 	@Qualifier("ventaConverter")
 	private VentaConverter ventaConverter;
+	
+	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
+	
+	@Autowired
+	@Qualifier("juegoConverter")
+	private JuegoConverter juegoConverter;
 
 	@Override
 	public List<VentaModel> listAllVentas() {
@@ -49,9 +59,9 @@ public class VentaServiceImpl implements VentaService{
 			ventaJpaRepository.deleteById(id);
 			return true;
 		}
-		else {
+//		else {
 			return false;
-		}
+//		}
 	}
 
 	@Override
@@ -65,9 +75,9 @@ public class VentaServiceImpl implements VentaService{
 	}
 
 	@Override
-	public VentaModel findByJuego(Juego juego) {
-		if(ventaJpaRepository.findByJuego(juego) != null) {
-			return ventaConverter.transform(ventaJpaRepository.findByJuego(juego));
+	public VentaModel findByJuego(JuegoModel juegoModel) {
+		if(ventaJpaRepository.findByJuego(juegoConverter.transform(juegoModel)) != null) {
+			return ventaConverter.transform(ventaJpaRepository.findByJuego(juegoConverter.transform(juegoModel)));
 		}
 		else {
 			return null;
@@ -75,8 +85,8 @@ public class VentaServiceImpl implements VentaService{
 	}
 
 	@Override
-	public List<VentaModel> findAllByUser(User user) {
-		return new ArrayList<VentaModel>(ventaJpaRepository.findAllByUser(user).stream().map(v -> ventaConverter.transform(v)).collect(Collectors.toList()));
+	public List<VentaModel> findAllByUser(UserModel userModel) {
+		return new ArrayList<VentaModel>(ventaJpaRepository.findAllByUser(userConverter.transform(userModel)).stream().map(v -> ventaConverter.transform(v)).collect(Collectors.toList()));
 	}
 
 	

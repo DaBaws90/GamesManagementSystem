@@ -71,7 +71,11 @@
                 </div>
             </nav>
             
-            <div th:if="${edited == 1}" class="alert alert-info text-center">Se ha editado su perfil con éxito</div>
+            <div th:if="${edited == 1}" class="alert alert-info alert-dismissible fade show text-center">Se ha editado su perfil con éxito
+            	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    	<span aria-hidden="true">&times;</span>
+			  	</button>
+            </div>
             
             <div class="text-center">
             	<h2 class="mb-5">Bienvenido a tu perfil, <span sec:authentication="principal.username">!</span></h2>
@@ -85,12 +89,12 @@
 			<div class="text-center">
 	            <h3>Alquileres recientes</h3>
 	            
-	            <div th:if="${alquileresModel.isEmpty()}">
+	            <div class="mt-4" th:if="${alquileresModel.isEmpty()}">
 	            	<p>No records found</p>
 	            </div>
 	            
-	            <div th:if="${!alquileresModel.isEmpty()}">
-	            	<table class="table table-dark">
+	            <div class="mt-4" th:if="${!alquileresModel.isEmpty()}">
+	            	<table class="table">
 	            		<thead>
 							<tr scope="row">
 								<th scope="col">Juego</th>
@@ -114,12 +118,12 @@
             <div class="text-center">
 	            <h3>Compras recientes</h3>
 	            
-	            <div th:if="${ventasModel.isEmpty()}">
+	            <div class="mt-4" th:if="${ventasModel.isEmpty()}">
 	            	<p>No records found</p>
 	            </div>
 	            
-	            <div th:if="${!ventasModel.isEmpty()}">
-	            	<table class="table table-dark">
+	            <div class="mt-4" th:if="${!ventasModel.isEmpty()}">
+	            	<table class="table">
 	            		<thead>
 							<tr scope="row">
 								<th scope="col">Juego</th>
@@ -141,12 +145,12 @@
             <div class="text-center">
 	            <h3>Competiciones recientes</h3>
 	            
-	            <div th:if="${participacionesModel.isEmpty()}">
+	            <div class="mt-4" th:if="${participacionesModel.isEmpty()}">
 	            	<p>No records found</p>
 	            </div>
 	            
-	            <div th:if="${!participacionesModel.isEmpty()}">
-	            	<table class="table table-dark">
+	            <div class="mt-4" th:if="${!participacionesModel.isEmpty()}">
+	            	<table class="table">
 	            		<thead>
 							<tr scope="row">
 								<th scope="col">Nombre</th>
@@ -162,7 +166,7 @@
 								<td th:text="${torneo.getCompeticion().getFecha()}"></td>
 								<td th:text="${torneo.getCompeticion().getLugar()}"></td>
 								<td th:text="${torneo.getCompeticion().getJuego().getTitulo()}"></td>
-								<td th:text="${torneo.posicion != null} ? ${torneo.posicion} : '-'"></td>
+								<td th:text="${torneo.posicion != 0} ? ${torneo.posicion} : 'No disputado'"></td>
 							</tr>
 						</tbody>
 	            	</table>

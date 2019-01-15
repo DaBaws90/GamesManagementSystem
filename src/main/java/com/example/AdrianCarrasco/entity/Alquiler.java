@@ -28,11 +28,11 @@ public class Alquiler {
 	private Date fechaDevolucion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_user")
+	@JoinColumn(name = "iduser")
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_juego")
+	@JoinColumn(name = "idjuego")
 	private Juego juego;
 
 	public Alquiler() {
@@ -91,7 +91,7 @@ public class Alquiler {
 	@Override
 	public String toString() {
 		return "Alquiler [id=" + id + ", fechaAlquiler=" + fechaAlquiler + ", fechaDevolucion=" + fechaDevolucion
-				+ ", user=" + user.getUsername() + ", juego=" + juego.getTitulo() + "]";
+				+ ", user=" + user + ", juego=" + juego + "]";
 	}
 	
 	

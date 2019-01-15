@@ -49,7 +49,7 @@ public class PlataformasController {
 	}
 	
 	@GetMapping("/editPlataforma/{id}")
-	public ModelAndView editPlataformaForm(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
+	public ModelAndView editPlataformaForm(@PathVariable(name = "id") int id) {
 		ModelAndView mav = new ModelAndView(Constants.PLATAFORMAS_EDIT);
 		PlataformaModel plataformaModel = plataformaService.findById(id);
 		logger.info("GET", "editPlataformaForm", "PLATAFORMAS_EDIT", "PlataformasController", "PLATAFORMA", "EDITED", plataformaModel);
@@ -106,12 +106,12 @@ public class PlataformasController {
 		else {
 			if(plataformaService.findByNombre(plataformaModel.getNombre()) == null) {
 				if(plataformaService.addPlataforma(plataformaModel) != null) {
-					logger.success("PLATAFORMA", "ADDED", plataformaModel);
+					logger.success("PLATAFORMA", "INSERTED", plataformaModel);
 					mav.setViewName("redirect:/plataformas/index");
 					redirectAttributes.addFlashAttribute("insert", 1);
 				}
 				else {
-					logger.unsuccessful("ADD", "PLATAFORMA", plataformaModel);
+					logger.unsuccessful("INSERT", "PLATAFORMA", plataformaModel);
 					mav.setViewName("redirect:/plataformas/addPlataforma/");
 					redirectAttributes.addFlashAttribute("insert", 0);
 				}

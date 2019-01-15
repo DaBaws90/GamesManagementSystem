@@ -23,14 +23,14 @@ public class Venta {
 	private int id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "iduser")
 	private User user;
 	
 	@Column(name = "fecha")
 	private Date fecha;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_juego")
+    @JoinColumn(name = "idjuego")
 //	@MapsId
 	private Juego juego;
 

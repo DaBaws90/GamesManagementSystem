@@ -22,7 +22,7 @@ public class Competicion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_competicion")
+	@Column(name = "id")
 	private int id;
 	
 	@Column(name = "nombre")
@@ -37,11 +37,11 @@ public class Competicion {
 	@Column(name = "lugar")
 	private String lugar;
 
-	@OneToMany(mappedBy = "competicion", cascade = CascadeType.REMOVE)
-	private Set<Participacion> participaciones = new HashSet<>();
+	@OneToMany(mappedBy="competicion", cascade = CascadeType.REMOVE)
+	private Set<Participacion> participaciones = new HashSet<Participacion>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_juego")
+	@JoinColumn(name = "idjuego")
 	private Juego juego;
 
 	public Competicion() {

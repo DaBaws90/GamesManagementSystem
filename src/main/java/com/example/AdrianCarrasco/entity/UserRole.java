@@ -20,7 +20,7 @@ public class UserRole {
 	@Column(name="user_role_id")
 	private int userRoleId;
 	
-	@ManyToOne(fetch=FetchType.EAGER/*, cascade = CascadeType.ALL*/)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private User user;
 	
@@ -75,7 +75,7 @@ public class UserRole {
 
 	@Override
 	public String toString() {
-		return "UserRole [userRoleId=" + userRoleId + ", user=" + user + ", role=" + role + "]";
+		return "UserRole [userRoleId=" + userRoleId + ", user=" + user.getUsername() + ", role=" + role + "]";
 	}
 	
 

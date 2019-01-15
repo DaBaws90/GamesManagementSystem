@@ -19,12 +19,12 @@ public class Participacion {
 	@Column(name = "id")
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_user")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "iduser")
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_competicion")
+	@JoinColumn(name="idcompeticion")
 	private Competicion competicion;
 	
 	@Column(name = "posicion")
@@ -76,7 +76,7 @@ public class Participacion {
 
 	@Override
 	public String toString() {
-		return "Participacion [id=" + id + ", user=" + user.getUsername() + ", competicion=" + competicion.getNombre() + ", posicion=" + posicion
+		return "Participacion [id=" + id + ", user=" + user + ", competicion=" + competicion + ", posicion=" + posicion
 				+ "]";
 	}
 

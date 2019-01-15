@@ -65,3 +65,33 @@
     justify-content: center;
     height: 86vh;
 }
+.flex-container-competicionesIndex{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 66vh;
+    min-height: 50vh;
+}
+
+.flex-container-competicionesAdd-noGames{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* max-height: 66vh; */
+    min-height: 66.1vh;
+    margin-bottom: 9.4%;
+}
+
+/* .flex-container-competicionesEdit{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 75vh;
+} */
+
+.flex-container-addParticipacion{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 71.2vh;
+}

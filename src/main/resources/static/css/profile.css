@@ -223,14 +223,14 @@ a.article, a.article:hover {
 .fa-home.profile{
     position: absolute;
     left: 215px;
-    top: 24%;
+    top: 21%;
 
 }
 
 .fa-pencil-alt.profile{
 	position: absolute;
     left: 215px;
-    top: 36%;
+    top: 31%;
 }
 
 .btn-logOut{
