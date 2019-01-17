@@ -29,6 +29,9 @@ public class Venta {
 	@Column(name = "fecha")
 	private Date fecha;
 	
+	@Column(name = "factura")
+	private String factura;
+	
 	@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idjuego")
 //	@MapsId
@@ -38,11 +41,12 @@ public class Venta {
 		super();
 	}
 
-	public Venta(int id, User user, Date fecha, Juego juego) {
+	public Venta(int id, User user, Date fecha, String factura, Juego juego) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.fecha = fecha;
+		this.factura = factura;
 		this.juego = juego;
 	}
 
@@ -70,6 +74,14 @@ public class Venta {
 		this.fecha = fecha;
 	}
 
+	public String getFactura() {
+		return factura;
+	}
+
+	public void setFactura(String factura) {
+		this.factura = factura;
+	}
+
 	public Juego getJuego() {
 		return juego;
 	}
@@ -80,7 +92,8 @@ public class Venta {
 
 	@Override
 	public String toString() {
-		return "Venta [id=" + id + ", user=" + user + ", fecha=" + fecha + ", juego=" + juego + "]";
+		return "Venta [id=" + id + ", user=" + user + ", fecha=" + fecha + ", factura#=" + factura + ", juego=" + juego
+				+ "]";
 	}
 	
 	

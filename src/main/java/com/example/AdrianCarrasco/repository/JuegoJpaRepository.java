@@ -18,6 +18,8 @@ public interface JuegoJpaRepository extends JpaRepository<Juego, Serializable>{
 	public abstract List<Juego> findAllByLanzamiento(Date fecha);
 	public abstract List<Juego> findAllByPegi(String pegi);
 	
-	public abstract List<Juego> findAllByCompradoFalse();
 	public abstract List<Juego> findAllByAlquiladoFalse();
+	
+	public abstract List<Juego> findAllByStockGreaterThanAndTipo(int stock, String tipo);
+	public abstract List<Juego> findAllByTipoAndAlquiladoFalse(String tipo);
 }

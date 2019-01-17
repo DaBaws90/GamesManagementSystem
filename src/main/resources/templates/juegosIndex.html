@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Games Page</title>
+</head>
+<body>
+	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+	
+	<div style="min-height: 85.9vh;" class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5 mb-3 text-center">
+				<h2>Listado de juegos disponibles</h2>
+			</div>
+		</div>
+		<div class="row" th:if="${!juegosModels.isEmpty()}">
+			<div class="col-md-8 offset-md-2 mt-2 mb-2 text-center">
+				<a th:href="@{'/juegos/addJuego'}"><i class="fas fa-plus"></i> Añadir juego</a>
+			</div>
+		</div>
+		<div th:if="${!juegosModels.isEmpty()}" class="row">
+			<div class="col-md-10 offset-md-1">
+				<div class="mt-3">
+					<!-- <div class="mt-3 col-md-4 text-center" th:each="juego : ${juegosModels}">
+						<div class="card text-center">
+							<div class="card-header">
+								<h4 th:text="${juego.titulo}"></h4>
+							</div>
+							<div class="card-body">
+								<p th:text="${juego.descripcion}"></p>
+							</div>
+							<div class="card-body link">
+								<a th:href="@{'/noticias/details/' + ${noticia.id}}" class="btn btn-success"><i class="fas fa-search"></i> Ver contenido</a>
+							</div>
+						</div>
+					</div> -->
+					<table class="table table-dark">
+						<thead>
+							<tr scope="row">
+								<th scope="col">Titulo</th>
+								<th scope="col">Tipo</th>
+								<th scope="col">Stock</th>
+								<th scope="col"></th>
+								<th scope="col"></th>		
+							</tr>
+						</thead>
+						<tbody>
+							<tr scope="row" th:each="juego : ${juegosModels}">
+								<td th:text="${juego.titulo}"></td>
+								<td th:text="${juego.tipo}"></td>
+								<td th:text="${juego.stock != 0} ? ${juego.stock} : 'Sin stock'"></td>
+								<td><a th:href="@{'/juegos/editJuego/' + ${juego.id}}"><i class="far fa-edit"></i></a></td>
+								<td><a onclick="return confirm('Está seguro?')" th:href="@{'/juegos/delete/' + ${juego.id}}"><i class="far fa-trash-alt"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div th:if="${juegosModels.isEmpty()}" class="text-center mt-3 flex-container-competicionesIndex">
+					<h5 class="text-muted">Currently, there is any games registered in our system.</h5>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2 text-center">
+				<div th:if="${edited == 1}" class="alert alert-info text-center">Se realizó la edición con éxito</div>
+				<div th:if="${deleted == 1}" class="alert alert-info text-center">Se eliminó el registro con éxito</div>
+				<div th:if="${deleted == 0}" class="alert alert-info text-center">No se pudo eliminar el registro</div>
+				<div th:if="${insert == 1}" class="alert alert-info text-center">Se añadió con éxito el juego</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
+</body>
+</html>

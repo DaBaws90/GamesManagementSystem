@@ -1,6 +1,7 @@
 package com.example.AdrianCarrasco.service.impl;
 
 import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class VentaServiceImpl implements VentaService{
 
 	@Override
 	public Venta addVenta(VentaModel ventaModel) {
+		ventaModel.setFactura(String.valueOf(Instant.now().toEpochMilli()));
 		return ventaJpaRepository.save(ventaConverter.transform(ventaModel));
 	}
 
@@ -59,9 +61,9 @@ public class VentaServiceImpl implements VentaService{
 			ventaJpaRepository.deleteById(id);
 			return true;
 		}
-//		else {
+		else {
 			return false;
-//		}
+		}
 	}
 
 	@Override
@@ -87,6 +89,11 @@ public class VentaServiceImpl implements VentaService{
 	@Override
 	public List<VentaModel> findAllByUser(UserModel userModel) {
 		return new ArrayList<VentaModel>(ventaJpaRepository.findAllByUser(userConverter.transform(userModel)).stream().map(v -> ventaConverter.transform(v)).collect(Collectors.toList()));
+	}
+
+	@Override
+	public VentaModel findByFactura(String factura) {
+		return ventaConverter.transform(ventaJpaRepository.findByFactura(factura));
 	}
 
 	

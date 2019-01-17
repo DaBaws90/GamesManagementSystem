@@ -20,6 +20,8 @@ public class Constants {
 	
 //	Juegos templates
 	public static final String JUEGOS_INDEX = "juegosIndex";
+	public static final String JUEGOS_VENTAS = "juegosVentas";
+	public static final String JUEGOS_ALQUILERES = "juegosAlquileres";
 	public static final String JUEGOS_DETAILS = "juegosDetails";
 	public static final String JUEGOS_ADD = "juegosAdd";
 	public static final String JUEGOS_EDIT = "juegosEdit";

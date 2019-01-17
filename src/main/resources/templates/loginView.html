@@ -10,12 +10,23 @@
 	<div class="container flex-container-login" sec:authorize="!isAuthenticated()">
 		<div class="row">
 			<div class="col-md-8 offset-md-2 centerDiv">
-				<div th:if="${error != null}" class="alert alert-danger">Invalid username or password</div>
-				<div th:if="${logout != null}" class="alert alert-primary">Session closed</div>
-				<div th:if="${userAdded == 1}" class="alert alert-primary">Account succesfully created!</div>
+				<div th:if="${error != null}" class="alert alert-danger alert-dismissible fade show alert">Invalid username or password
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+				<div th:if="${logout != null}" class="alert alert-primary alert-dismissible fade show alert">Session closed
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+				<div th:if="${userAdded == 1}" class="alert alert-primary alert-dismissible fade show alert">Account succesfully created!
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
 
 				<form class="form-signin" th:action="@{/signin}" method="POST">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 					<div class="form-group">
 						<label for="username">Username</label> 

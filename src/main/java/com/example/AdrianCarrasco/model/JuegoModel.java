@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,7 +22,7 @@ public class JuegoModel {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=2, max=80)
+	@Size(min=2, max=1000)
 	private String descripcion;
 	
 	@NotNull
@@ -28,46 +30,43 @@ public class JuegoModel {
 	
 	@NotNull
 	@NotEmpty
-//	Selección desde desplegable
 	private String pegi;
 	
 	@NotNull
 	@NotEmpty
-//	Selección desde desplegable
 	private String tipo;
-	
 	
 	private String caratula;
 	
 	private boolean alquilado;
 	
-	private boolean comprado;
-	
 	@NotNull
-	@Digits(fraction=2, integer=2) 
+	@Digits(fraction=2, integer=3)
+	@DecimalMin("0.01")
+//	@Pattern(regexp = "\\d+(\\.\\d{1,2})?", message = "Máximo de 2 decimales precedido de al menos un entero")
 	private float precio;
-//	@DecimalMin(value = "0.01", inclusive = true)
-//	private BigDecimal precio;
 	
+	@Min(1)
+	private int stock;
 	
-	private Set<CategoriaModel> categoriasModel = new HashSet<>();
+	private Set<CategoriaModel> categoriasModel = new HashSet<CategoriaModel>();
 	
-	private Set<PlataformaModel> plataformasModel = new HashSet<>();
+	private Set<PlataformaModel> plataformasModel = new HashSet<PlataformaModel>();
 	
-	private Set<AlquilerModel> alquileresModel = new HashSet<>();
+	private Set<AlquilerModel> alquileresModel = new HashSet<AlquilerModel>();
 	
 	private VentaModel ventaModel;
 
-	private Set<CompeticionModel> competicionesModel = new HashSet<>();
+	private Set<CompeticionModel> competiciones = new HashSet<CompeticionModel>();
 
 	public JuegoModel() {
 		super();
 	}
 
 	public JuegoModel(int id, String titulo, String descripcion, Date lanzamiento, String pegi, String tipo,
-			String caratula, boolean alquilado, boolean comprado, float precio, Set<CategoriaModel> categoriasModel,
+			String caratula, boolean alquilado, float precio, int stock, Set<CategoriaModel> categoriasModel,
 			Set<PlataformaModel> plataformasModel, Set<AlquilerModel> alquileresModel, VentaModel ventaModel,
-			Set<CompeticionModel> competicionesModel) {
+			Set<CompeticionModel> competiciones) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -77,13 +76,13 @@ public class JuegoModel {
 		this.tipo = tipo;
 		this.caratula = caratula;
 		this.alquilado = alquilado;
-		this.comprado = comprado;
 		this.precio = precio;
+		this.stock = stock;
 		this.categoriasModel = categoriasModel;
 		this.plataformasModel = plataformasModel;
 		this.alquileresModel = alquileresModel;
 		this.ventaModel = ventaModel;
-		this.competicionesModel = competicionesModel;
+		this.competiciones = competiciones;
 	}
 
 	public int getId() {
@@ -150,14 +149,6 @@ public class JuegoModel {
 		this.alquilado = alquilado;
 	}
 
-	public boolean isComprado() {
-		return comprado;
-	}
-
-	public void setComprado(boolean comprado) {
-		this.comprado = comprado;
-	}
-
 	public float getPrecio() {
 		return precio;
 	}
@@ -166,51 +157,60 @@ public class JuegoModel {
 		this.precio = precio;
 	}
 
-	public Set<CategoriaModel> getCategoriasModel() {
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public Set<CategoriaModel> getCategorias() {
 		return categoriasModel;
 	}
 
-	public void setCategoriasModel(Set<CategoriaModel> categoriasModel) {
+	public void setCategorias(Set<CategoriaModel> categoriasModel) {
 		this.categoriasModel = categoriasModel;
 	}
 
-	public Set<PlataformaModel> getPlataformasModel() {
+	public Set<PlataformaModel> getPlataformas() {
 		return plataformasModel;
 	}
 
-	public void setPlataformasModel(Set<PlataformaModel> plataformasModel) {
+	public void setPlataformas(Set<PlataformaModel> plataformasModel) {
 		this.plataformasModel = plataformasModel;
 	}
 
-	public Set<AlquilerModel> getAlquileresModel() {
+	public Set<AlquilerModel> getAlquileres() {
 		return alquileresModel;
 	}
 
-	public void setAlquileresModel(Set<AlquilerModel> alquileresModel) {
+	public void setAlquileres(Set<AlquilerModel> alquileresModel) {
 		this.alquileresModel = alquileresModel;
 	}
 
-	public VentaModel getVentaModel() {
+	public VentaModel getVenta() {
 		return ventaModel;
 	}
 
-	public void setVentaModel(VentaModel ventaModel) {
+	public void setVenta(VentaModel ventaModel) {
 		this.ventaModel = ventaModel;
 	}
 
-	public Set<CompeticionModel> getCompeticionesModel() {
-		return competicionesModel;
+	public Set<CompeticionModel> getCompeticiones() {
+		return competiciones;
 	}
 
-	public void setCompeticionesModel(Set<CompeticionModel> competicionesModel) {
-		this.competicionesModel = competicionesModel;
+	public void setCompeticiones(Set<CompeticionModel> competiciones) {
+		this.competiciones = competiciones;
 	}
 
 	@Override
 	public String toString() {
 		return "JuegoModel [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", lanzamiento="
 				+ lanzamiento + ", pegi=" + pegi + ", tipo=" + tipo + ", caratula=" + caratula + ", alquilado="
-				+ alquilado + ", comprado=" + comprado + ", precio=" + precio + ", ventaModel=" + ventaModel + "]";
+				+ alquilado + ", precio=" + precio + ", stock=" + stock
+				+ ", categoriasModel=" + categoriasModel + ", plataformasModel=" + plataformasModel + "]";
 	}
 	
 

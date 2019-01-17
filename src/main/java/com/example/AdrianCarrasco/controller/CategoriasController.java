@@ -44,7 +44,7 @@ public class CategoriasController {
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<CategoriaModel> categoriasModels = categoriaService.listAllCategories();
-		logger.info("GET", "index", "CATEGORIAS_INDEX", "CategoriasController", "CATEGORIAS", "RETRIEVED", "List<CategoriaModel> categoriasModels");
+		logger.info("GET", "index", "CATEGORIAS_INDEX", "CategoriasController", "CATEGORIAS", "RETRIEVED", categoriasModels);
 		return new ModelAndView(Constants.CATEGORIAS_INDEX).addObject("categoriasModels", categoriasModels);
 	}
 	

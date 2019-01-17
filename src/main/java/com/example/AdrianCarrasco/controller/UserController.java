@@ -50,7 +50,7 @@ public class UserController {
 	public ModelAndView index() {
 //		Asigno a una lista la llamada al servicio para recuperar todos los usuarios, de este modo solo realizao la consulta a la base de datos una vez
 		List<UserModel> usersModels = userService.listAllUsers();
-		logger.info("GET", "index", "USERS_INDEX", "UserController", "USERS", "RETRIEVED", "List<UserModel> usersModels");
+		logger.info("GET", "index", "USERS_INDEX", "UserController", "USERS", "RETRIEVED", usersModels);
 		return new ModelAndView(Constants.USERS_INDEX).addObject("usersModels", usersModels);
 	}
 	

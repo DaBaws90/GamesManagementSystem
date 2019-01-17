@@ -18,4 +18,6 @@ public interface VentaJpaRepository extends JpaRepository<Venta, Serializable>{
 	public abstract List<Venta> findAllByFecha(Date fecha);
 	public abstract Venta findByJuego(Juego juego);
 	public abstract List<Venta> findAllByUser(User user);
+	
+	public abstract Venta findByFactura(String factura);
 }

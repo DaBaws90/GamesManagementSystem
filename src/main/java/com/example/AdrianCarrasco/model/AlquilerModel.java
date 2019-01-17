@@ -24,13 +24,13 @@ public class AlquilerModel {
 		super();
 	}
 
-	public AlquilerModel(int id, Date fechaAlquiler, Date fechaDevolucion, UserModel userModel, JuegoModel juegoModel) {
+	public AlquilerModel(int id, Date fechaAlquiler, Date fechaDevolucion, UserModel user, JuegoModel juego) {
 		super();
 		this.id = id;
 		this.fechaAlquiler = fechaAlquiler;
 		this.fechaDevolucion = fechaDevolucion;
-		this.userModel = userModel;
-		this.juegoModel = juegoModel;
+		this.userModel = user;
+		this.juegoModel = juego;
 	}
 
 	public int getId() {
@@ -57,26 +57,26 @@ public class AlquilerModel {
 		this.fechaDevolucion = fechaDevolucion;
 	}
 
-	public UserModel getUserModel() {
+	public UserModel getUser() {
 		return userModel;
 	}
 
-	public void setUserModel(UserModel userModel) {
+	public void setUser(UserModel userModel) {
 		this.userModel = userModel;
 	}
 
-	public JuegoModel getJuegoModel() {
+	public JuegoModel getJuego() {
 		return juegoModel;
 	}
 
-	public void setJuegoModel(JuegoModel juegoModel) {
+	public void setJuego(JuegoModel juegoModel) {
 		this.juegoModel = juegoModel;
 	}
 
 	@Override
 	public String toString() {
 		return "AlquilerModel [id=" + id + ", fechaAlquiler=" + fechaAlquiler + ", fechaDevolucion=" + fechaDevolucion
-				+ ", userModel=" + userModel.getUsername() + ", juegoModel=" + juegoModel.getTitulo() + "]";
+				+ ", userModel=" + userModel + ", juegoModel=" + juegoModel + "]";
 	}
 
 	

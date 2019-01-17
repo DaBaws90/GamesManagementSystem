@@ -24,7 +24,7 @@ public class Categoria {
 	private String nombre;
 	
 	@ManyToMany(mappedBy = "categorias")
-	private Set<Juego> juegos = new HashSet<>();
+	private Set<Juego> juegos = new HashSet<Juego>();
 
 	public Categoria() {
 		super();

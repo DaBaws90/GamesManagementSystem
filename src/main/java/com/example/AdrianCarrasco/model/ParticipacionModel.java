@@ -37,19 +37,19 @@ public class ParticipacionModel {
 		this.id = id;
 	}
 
-	public UserModel getUserModel() {
+	public UserModel getUser() {
 		return userModel;
 	}
 
-	public void setUserModel(UserModel userModel) {
+	public void setUser(UserModel userModel) {
 		this.userModel = userModel;
 	}
 
-	public CompeticionModel getCompeticionModel() {
+	public CompeticionModel getCompeticion() {
 		return competicionModel;
 	}
 
-	public void setCompeticionModel(CompeticionModel competicionModel) {
+	public void setCompeticion(CompeticionModel competicionModel) {
 		this.competicionModel = competicionModel;
 	}
 
@@ -63,7 +63,7 @@ public class ParticipacionModel {
 
 	@Override
 	public String toString() {
-		return "ParticipacionModel [id=" + id + ", userModel=" + userModel.getUsername() + ", competicionModel=" + competicionModel.getNombre()
+		return "ParticipacionModel [id=" + id + ", userModel=" + userModel + ", competicionModel=" + competicionModel
 				+ ", posicion=" + posicion + "]";
 	}
 

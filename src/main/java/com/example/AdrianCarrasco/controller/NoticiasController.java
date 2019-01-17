@@ -46,7 +46,7 @@ public class NoticiasController {
 		List<NoticiaModel> noticiasModels = noticiaService.listAllNoticias();
 		ModelAndView mav = new ModelAndView(Constants.NOTICIAS_INDEX);
 		mav.addObject("noticiasModels", noticiasModels);
-		logger.info("GET", "index", "NOTICIAS_INDEX", "NoticiasController", "NOTICIAS", "RETRIEVED", "List<NoticiaModel> noticiasModels");
+		logger.info("GET", "index", "NOTICIAS_INDEX", "NoticiasController", "NOTICIAS", "RETRIEVED", noticiasModels);
 		return mav;
 	}
 	

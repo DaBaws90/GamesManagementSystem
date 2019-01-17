@@ -30,7 +30,7 @@ public class CompeticionModel {
 	@Size(min=3, max=80)
 	private String lugar;
 	
-	private Set<ParticipacionModel> participacionesModel = new HashSet<>();
+	private Set<ParticipacionModel> participacionesModel = new HashSet<ParticipacionModel>();
 	
 	@NotNull
 	private JuegoModel juegoModel;
@@ -91,26 +91,26 @@ public class CompeticionModel {
 		this.lugar = lugar;
 	}
 
-	public Set<ParticipacionModel> getParticipacionesModel() {
+	public Set<ParticipacionModel> getParticipaciones() {
 		return participacionesModel;
 	}
 
-	public void setParticipacionesModel(Set<ParticipacionModel> participacionesModel) {
+	public void setParticipaciones(Set<ParticipacionModel> participacionesModel) {
 		this.participacionesModel = participacionesModel;
 	}
 
-	public JuegoModel getJuegoModel() {
+	public JuegoModel getJuego() {
 		return juegoModel;
 	}
 
-	public void setJuegoModel(JuegoModel juegoModel) {
+	public void setJuego(JuegoModel juegoModel) {
 		this.juegoModel = juegoModel;
 	}
 
 	@Override
 	public String toString() {
 		return "CompeticionModel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha
-				+ ", lugar=" + lugar + ", juegoModel=" + juegoModel.getTitulo() + "]";
+				+ ", lugar=" + lugar + ", juegoModel=" + juegoModel + "]";
 	}
 
 	

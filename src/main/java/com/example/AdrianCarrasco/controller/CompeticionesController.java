@@ -1,5 +1,7 @@
 package com.example.AdrianCarrasco.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +48,9 @@ public class CompeticionesController {
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
-		logger.info("GET", "index", "COMPETICIONES_INDEX", "CompeticionesController", "COMPETICIONES", "RETRIEVED", competicionService.listAllCompeticiones());
-		return new ModelAndView(Constants.COMPETICIONES_INDEX).addObject("competicionesModels", competicionService.listAllCompeticiones());
+		List<CompeticionModel> competicionesModels = competicionService.listAllCompeticiones();
+		logger.info("GET", "index", "COMPETICIONES_INDEX", "CompeticionesController", "COMPETICIONES", "RETRIEVED", competicionesModels);
+		return new ModelAndView(Constants.COMPETICIONES_INDEX).addObject("competicionesModels", competicionesModels);
 	}
 	
 	@GetMapping("/editCompeticion/{id}")

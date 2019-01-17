@@ -44,7 +44,7 @@ public class PlataformasController {
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<PlataformaModel> plataformasModels = plataformaService.listAllPlataformas();
-		logger.info("GET", "index", "PLATAFORMAS_INDEX", "PlataformasController", "PLATAFORMAS", "RETRIEVED", "List<PlataformaModel> plataformasModels");
+		logger.info("GET", "index", "PLATAFORMAS_INDEX", "PlataformasController", "PLATAFORMAS", "RETRIEVED", plataformasModels);
 		return new ModelAndView(Constants.PLATAFORMAS_INDEX).addObject("plataformasModels", plataformasModels);
 	}
 	

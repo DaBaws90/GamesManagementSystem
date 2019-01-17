@@ -22,7 +22,7 @@
 					<form th:action="@{/categorias/insert}" th:object="${categoriaModel}" method="POST">
 						<!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
 						
-						<div class="form-group row">
+						<div class="form-group row mb-5">
 							<label class="col-md-2 col-form-label" for="nombre">Nombre</label>
 							<div class="col-md-10">
 								<input class="form-control" type="text" th:field="*{nombre}"/>

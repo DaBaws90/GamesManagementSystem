@@ -2,7 +2,7 @@
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    height: 86vh !important;
+    height: 85.9vh !important;
     /* align-content: center;
     align-items: center; */
 }
@@ -56,7 +56,7 @@
 	display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 76.3vh;
+    min-height: 71.3vh;
 }
 
 .flex-container-addPlataforma{

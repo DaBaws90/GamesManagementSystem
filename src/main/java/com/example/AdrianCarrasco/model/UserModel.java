@@ -48,20 +48,20 @@ public class UserModel {
 	@Pattern(regexp = "^[0-9]{9}", message="Formato permitido: 9 dígitos, sin guiones")
 	private String telefono;
 	
-	private Set<UserRole> roles = new HashSet<UserRole>();
+	private Set<UserRole> userRole = new HashSet<UserRole>();
 	
-	private Set<AlquilerModel> alquileresModel = new HashSet<AlquilerModel>();
+	private Set<AlquilerModel> alquileres = new HashSet<AlquilerModel>();
 	
-	private Set<VentaModel> ventasModel = new HashSet<VentaModel>();
+	private Set<VentaModel> ventas = new HashSet<VentaModel>();
 	
-	private Set<ParticipacionModel> participacionesModel = new HashSet<ParticipacionModel>();
+	private Set<ParticipacionModel> participaciones = new HashSet<ParticipacionModel>();
 
 	public UserModel() {
 		super();
 	}
 
 	public UserModel(int id, String username, String password, boolean enabled, String nombre, String apellidos, String email, String telefono,
-			Set<UserRole> roles, Set<AlquilerModel> alquileresModel, Set<VentaModel> ventasModel, Set<ParticipacionModel> participacionesModel) {
+			Set<UserRole> roles, Set<AlquilerModel> alquileres, Set<VentaModel> ventas, Set<ParticipacionModel> participaciones) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -71,10 +71,10 @@ public class UserModel {
 		this.apellidos = apellidos;
 		this.email = email;
 		this.telefono = telefono;
-		this.roles = roles;
-		this.alquileresModel = alquileresModel;
-		this.ventasModel = ventasModel;
-		this.participacionesModel = participacionesModel;
+		this.userRole = roles;
+		this.alquileres = alquileres;
+		this.ventas = ventas;
+		this.participaciones = participaciones;
 	}
 
 	public int getId() {
@@ -141,43 +141,43 @@ public class UserModel {
 		this.telefono = telefono;
 	}
 
-	public Set<UserRole> getRoles() {
-		return roles;
+	public Set<UserRole> getUserRole() {
+		return userRole;
 	}
 
-	public void setRoles(Set<UserRole> roles) {
-		this.roles = roles;
+	public void setUserRole(Set<UserRole> roles) {
+		this.userRole = roles;
 	}
 
-	public Set<AlquilerModel> getAlquileresModel() {
-		return alquileresModel;
+	public Set<AlquilerModel> getAlquileres() {
+		return alquileres;
 	}
 
-	public void setAlquileresModel(Set<AlquilerModel> alquileresModel) {
-		this.alquileresModel = alquileresModel;
+	public void setAlquileres(Set<AlquilerModel> alquileres) {
+		this.alquileres = alquileres;
 	}
 
-	public Set<VentaModel> getVentasModel() {
-		return ventasModel;
+	public Set<VentaModel> getVentas() {
+		return ventas;
 	}
 
-	public void setVentasModel(Set<VentaModel> ventasModel) {
-		this.ventasModel = ventasModel;
+	public void setVentas(Set<VentaModel> ventas) {
+		this.ventas = ventas;
 	}
 
-	public Set<ParticipacionModel> getParticipacionesModel() {
-		return participacionesModel;
+	public Set<ParticipacionModel> getParticipaciones() {
+		return participaciones;
 	}
 
-	public void setParticipacionesModel(Set<ParticipacionModel> participacionesModel) {
-		this.participacionesModel = participacionesModel;
+	public void setParticipaciones(Set<ParticipacionModel> participaciones) {
+		this.participaciones = participaciones;
 	}
 
 	@Override
 	public String toString() {
 		return "UserModel [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
 				+ ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email + ", telefono=" + telefono
-				+ ", roles=" + roles + "]";
+				+ ", userRole=" + userRole + "]";
 	}
 
 	

@@ -16,7 +16,7 @@ public class CategoriaModel {
 	@Size(min=2, max=80)
 	private String nombre;
 	
-	private Set<JuegoModel> juegosModel = new HashSet<>();
+	private Set<JuegoModel> juegosModel = new HashSet<JuegoModel>();
 
 	public CategoriaModel() {
 		super();
@@ -45,11 +45,11 @@ public class CategoriaModel {
 		this.nombre = nombre;
 	}
 
-	public Set<JuegoModel> getJuegosModel() {
+	public Set<JuegoModel> getJuegos() {
 		return juegosModel;
 	}
 
-	public void setJuegosModel(Set<JuegoModel> juegosModel) {
+	public void setJuegos(Set<JuegoModel> juegosModel) {
 		this.juegosModel = juegosModel;
 	}
 

@@ -158,6 +158,7 @@
 								<th scope="col">Lugar</th>
 								<th scope="col">Juego</th>
 								<th scope="col">Posición</th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -167,6 +168,7 @@
 								<td th:text="${torneo.getCompeticion().getLugar()}"></td>
 								<td th:text="${torneo.getCompeticion().getJuego().getTitulo()}"></td>
 								<td th:text="${torneo.posicion != 0} ? ${torneo.posicion} : 'No disputado'"></td>
+								<td><a onclick="return confirm('Está seguro de cancelar su participación?')" th:href="@{'/participaciones/delete/' + ${torneo.id}}"><i class="far fa-trash-alt"></i></a></td>
 							</tr>
 						</tbody>
 	            	</table>

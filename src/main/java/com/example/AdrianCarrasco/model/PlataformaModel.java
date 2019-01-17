@@ -16,7 +16,7 @@ public class PlataformaModel {
 	@Size(min=2, max=80)
 	private String nombre;
 	
-	private Set<JuegoModel> juegosModels = new HashSet<>();
+	private Set<JuegoModel> juegosModels = new HashSet<JuegoModel>();
 
 	public PlataformaModel() {
 		super();
@@ -45,11 +45,11 @@ public class PlataformaModel {
 		this.nombre = nombre;
 	}
 
-	public Set<JuegoModel> getJuegosModels() {
+	public Set<JuegoModel> getJuegos() {
 		return juegosModels;
 	}
 
-	public void setJuegosModels(Set<JuegoModel> juegosModels) {
+	public void setJuegos(Set<JuegoModel> juegosModels) {
 		this.juegosModels = juegosModels;
 	}
 

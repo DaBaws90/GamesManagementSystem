@@ -1,5 +1,7 @@
 package com.example.AdrianCarrasco.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +56,9 @@ public class ParticipacionesController {
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
+		List<ParticipacionModel> participacionesModels = participacionService.listAllParticipaciones();
 		logger.info("GET", "index", "PARTICIPACIONES_INDEX", "ParticipacionesController", "PARTICIPACIONES", "RETRIEVED", "listAllParticipaciones()");
-		return new ModelAndView(Constants.PARTICIPACIONES_INDEX).addObject("participacionesModels", participacionService.listAllParticipaciones());
+		return new ModelAndView(Constants.PARTICIPACIONES_INDEX).addObject("participacionesModels", participacionesModels);
 	}
 	
 //	No pueden ser editados ni el usuario, ni la competicion. Solamente el admin podrá registrar el resultado. Si el usuario quiere cambiar de competicion,

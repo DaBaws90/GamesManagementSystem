@@ -18,4 +18,6 @@ public interface VentaService {
 	public abstract List<VentaModel> findAllByFecha(Date fecha);
 	public abstract VentaModel findByJuego(JuegoModel juegoModel);
 	public abstract List<VentaModel> findAllByUser(UserModel userModel);
+	
+	public abstract VentaModel findByFactura(String factura); 
 }

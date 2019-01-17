@@ -48,22 +48,24 @@ public class Juego {
 	@Column(name = "alquilado")
 	private boolean alquilado;
 	
-	@Column(name = "comprado")
-	private boolean comprado;
-	
 	@Column(name = "precio")
 	private float precio;
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@Column(name = "stock")
+	private int stock;
+	
+//	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "juego_categoria",
-			joinColumns = @JoinColumn(name = "idjuego"),
-			inverseJoinColumns = @JoinColumn(name = "idcategoria"))
+			joinColumns = @JoinColumn(name = "id_juego"),
+			inverseJoinColumns = @JoinColumn(name = "id_categoria"))
 	private Set<Categoria> categorias = new HashSet<Categoria>();
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
+//	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "juego_plataforma",
-			joinColumns = @JoinColumn(name = "idjuego"),
-			inverseJoinColumns = @JoinColumn(name = "idplataforma"))
+			joinColumns = @JoinColumn(name = "id_juego"),
+			inverseJoinColumns = @JoinColumn(name = "id_plataforma"))
 	private Set<Plataforma> plataformas = new HashSet<Plataforma>();
 	
 	@OneToMany(mappedBy = "juego", cascade = CascadeType.REMOVE)
@@ -81,7 +83,7 @@ public class Juego {
 	}
 
 	public Juego(int id, String titulo, String descripcion, Date lanzamiento, String pegi, String tipo, String caratula,
-			boolean alquilado, boolean comprado, float precio, Set<Categoria> categorias, Set<Plataforma> plataformas,
+			boolean alquilado, float precio, int stock, Set<Categoria> categorias, Set<Plataforma> plataformas,
 			Set<Alquiler> alquileres, Venta venta, Set<Competicion> competiciones) {
 		super();
 		this.id = id;
@@ -92,8 +94,8 @@ public class Juego {
 		this.tipo = tipo;
 		this.caratula = caratula;
 		this.alquilado = alquilado;
-		this.comprado = comprado;
 		this.precio = precio;
+		this.stock = stock;
 		this.categorias = categorias;
 		this.plataformas = plataformas;
 		this.alquileres = alquileres;
@@ -165,20 +167,20 @@ public class Juego {
 		this.alquilado = alquilado;
 	}
 
-	public boolean isComprado() {
-		return comprado;
-	}
-
-	public void setComprado(boolean comprado) {
-		this.comprado = comprado;
-	}
-
 	public float getPrecio() {
 		return precio;
 	}
 
 	public void setPrecio(float precio) {
 		this.precio = precio;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	public Set<Categoria> getCategorias() {
@@ -225,7 +227,8 @@ public class Juego {
 	public String toString() {
 		return "Juego [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", lanzamiento="
 				+ lanzamiento + ", pegi=" + pegi + ", tipo=" + tipo + ", caratula=" + caratula + ", alquilado="
-				+ alquilado + ", comprado=" + comprado + ", precio=" + precio + ", venta=" + venta + "]";
+				+ alquilado + ", precio=" + precio + ", stock=" + stock + ", categorias="
+				+ categorias + ", plataformas=" + plataformas + "]";
 	}
 	
 	
