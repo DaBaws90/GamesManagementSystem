@@ -15,7 +15,17 @@
 				</li>
 	
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{'/juegos/'}">Juegos</a>
+                    <!-- <a class="nav-link" th:href="@{'/juegos/'}">Juegos</a> -->
+                    <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>Juegos</span>
+                    </a>
+                    <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/juegos/index/compras}">Juegos en venta</a>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/juegos/index/alquileres}">Juegos en alquiler</a>
+                    </div>
+                </div>
 				</li>
 	
 				<li class="nav-item">
@@ -33,7 +43,7 @@
 			
 			<div class="nav-item dropdown" sec:authorize="!isAuthenticated()">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span>Hello, guest!<span>
+					<span>Hello, guest!</span>
 				</a>
 				<div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" th:href="@{/login}">Log in</a>
@@ -44,7 +54,7 @@
 			
 			<div class="nav-item dropdown" sec:authorize="isAuthenticated()">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span>Hello, <span sec:authentication="principal.username"></span>!<span>
+					<span>Hello, <span sec:authentication="principal.username"></span>!</span>
 				</a>
 				<div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" th:href="@{/users/profile}">Perfil</a>
@@ -58,20 +68,6 @@
 			</div>
 		</div>
 
-		<!-- <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-			<div class="navbar-nav">
-				<a class="nav-item nav-link active" th:href="@{'/home/'}">Home <span class="sr-only">(current)</span></a> 
-				<!- <a class="nav-item nav-link" th:href="@{'/coches/'}">Coches</a> 
-				<a class="nav-item nav-link" th:href="@{'/carreras/'}">Carreras</a>
-				<a class="nav-item nav-link" th:href="@{'/participaciones/'}">Participaciones</a> -->
-				<!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> ->
-			</div>
-		</div>
-		<div sec:authorize="isAuthenticated()">
-			<form th:action="@{/logout}" method="POST">
-				<button class="btn btn-default" type="submit">Logout</button>
-			</form>
-		</div> -->
 	</nav>
 </div>
 
@@ -87,13 +83,34 @@
 			<div class="navbar-nav">
 				<a class="nav-item nav-link active" th:href="@{'/home/'}">Home <span class="sr-only">(current)</span></a> 
 				<a class="nav-item nav-link" th:href="@{'/users/'}">Usuarios</a>
-				<a class="nav-item nav-link" th:href="@{'/noticias/'}">Noticias</a>
+                <a class="nav-item nav-link" th:href="@{'/noticias/'}">Noticias</a>
+                <a class="nav-item nav-link" th:href="@{'/competiciones/'}">Torneos</a>
+                <a class="nav-item nav-link" th:href="@{'/participaciones/'}">Participaciones</a>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>Gestionar juegos</span>
+                    </a>
+                    <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{'/ventas/'}">Ventas</a>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{'/alquileres/'}">Alquileres</a>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{'/alquileres/index/alquileres'}">Alquileres pendientes</a>
+                    </div>
+                </div>
 			</div>
 		</div>
-		<div sec:authorize="isAuthenticated()">
-			<form th:action="@{/logout}" method="POST">
-				<button class="btn btn-default" type="submit">Logout</button>
-			</form>
-		</div>
+		<div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>Hello, <span sec:authentication="principal.username"></span>!</span>
+            </a>
+            <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                <form th:action="@{/logout}" method="POST">
+                    <button class="btn btn-light btn-block" type="submit">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
 	</nav>
 </div>

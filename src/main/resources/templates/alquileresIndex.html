@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Rent Games Page</title>
+</head>
+<body>
+	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+	
+	<div style="min-height: 85.9vh;" class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5 mb-3 text-center">
+				<h2>Historial de juegos alquilados</h2>
+			</div>
+        </div>
+        
+        <div class="row">
+			<div class="col-md-8 offset-md-2 text-center">
+				<div th:if="${returned == 1}" class="alert alert-info alert-dismissible fade show text-center">El juego vuelve a estar disponible para alquilar
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${returned == 0}" class="alert alert-danger alert-dismissible fade show text-center">Hubo un error al solicitar la devolución del juego
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+			</div>
+		</div>
+
+		<div th:if="${!alquileresModels.isEmpty()}" class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="mt-3">
+					<table class="table table-dark">
+						<thead>
+							<tr scope="row">
+								<th scope="col">Usuario</th>
+                                <th scope="col">Juego</th>
+                                <th scope="col">Fecha Alquiler</th>
+                                <th scope="col">Fecha Devolución</th>
+								<!-- <th scope="col"></th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<tr scope="row" th:each="alquiler : ${alquileresModels}">
+                                <td th:text="${alquiler.user.getUsername()}"></td>
+								<td th:text="${alquiler.juego.getTitulo()}"></td>
+								<td th:text="${alquiler.fechaAlquiler}"></td>
+								<td th:text="${alquiler.fechaDevolucion}"></td>
+                                <!-- <td th:if="${alquiler.juego.isAlquilado() == true}">
+                                    <a style="text-decoration-line: none" onclick="return confirm('Se establecerá el juego como devuelto. Desea continuar?')" 
+                                        th:href="@{'/alquileres/devolucion/' + ${alquiler.juego.getId()}}">
+                                        Reclamar
+                                    </a>
+                                </td> -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div th:if="${alquileresModels.isEmpty()}" class="text-center mt-3 flex-container-competicionesIndex">
+					<h5 class="text-muted">Currently, there is no records in our system from any rented games.</h5>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
+</body>
+</html>

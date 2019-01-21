@@ -17,22 +17,24 @@
                 	<p><span sec:authentication="principal.username"></span>'s profile</p>
                 </div>
                 <li class="active">
-                	<a th:href="@{/home/}"><i class="fas fa-home profile"></i>Home</a>
+                	<a th:href="@{'/home/'}"><i class="fas fa-home profile"></i>Home</a>
                 </li>
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle profile">Go to</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="@{/juegos}">Juegos</a>
+                            <a th:href="@{'/juegos/index/compras'}">Juegos para comprar</a>
                         </li>
                         <li>
-                            <a href="@{/competiciones}">Torneos</a>
+                            <a th:href="@{'/juegos/index/alquileres'}">Juegos para alquilar</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a th:href="@{'/competiciones/'}">Torneos</a>
                         </li>
                     </ul>
-                    <a th:href="@{/users/editUser}"><i class="fas fa-pencil-alt profile"></i>Editar perfil</a>
+                </li>
+                <li>
+                    <a th:href="@{'/users/editUser'}"><i class="fas fa-pencil-alt profile"></i>Editar perfil</a>
                 </li>
                 <li>
                     <a href="#">Portfolio</a>
@@ -71,19 +73,39 @@
                 </div>
             </nav>
             
-            <div th:if="${edited == 1}" class="alert alert-info alert-dismissible fade show text-center">Se ha editado su perfil con éxito
-            	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			    	<span aria-hidden="true">&times;</span>
-			  	</button>
+            <div>
+                <div th:if="${edited == 1}" class="alert alert-info alert-dismissible fade show text-center">Se ha editado su perfil con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:if="${insert == 1}" class="alert alert-info alert-dismissible fade show text-center">Se registró la participación con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:if="${deleted == 1}" class="alert alert-info alert-dismissible fade show text-center">Se canceló su participación en el torneo
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:if="${returned == 1}" class="alert alert-info alert-dismissible fade show text-center">Se ha devuelto el juego a la tienda
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:if="${returned == 0}" class="alert alert-info alert-dismissible fade show text-center">No se pudo entregar el juego a la tienda
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
-            
+                
             <div class="text-center">
-            	<h2 class="mb-5">Bienvenido a tu perfil, <span sec:authentication="principal.username">!</span></h2>
-	            <h5 class="text-muted">Aquí podrás editar tu perfil y consultar tus alquileres, tus compras y los torneos en los que has participado hasta la fecha.</h5>
-			</div>
+                <h2 class="mb-5">Bienvenido a tu perfil, <span sec:authentication="principal.username">!</span></h2>
+                <h5 class="text-muted">Aquí podrás editar tu perfil y consultar tus alquileres, tus compras y los torneos en los que has participado hasta la fecha.</h5>
+            </div>
 			
-            <!-- <div th:if="${edited == 1}" class="alert alert-info text-center mt-3">Se ha editado su perfil con éxito</div> -->
-
             <div class="line"></div>
 
 			<div class="text-center">
@@ -99,14 +121,17 @@
 							<tr scope="row">
 								<th scope="col">Juego</th>
 								<th scope="col">Fecha</th>
-								<th scope="col">Devolución</th>
+                                <th scope="col">Devolución</th>
+                                <!-- <th scope="col"></th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<tr scope="row" th:each="alquiler : ${alquileresModel}">
-								<td th:text="${alquiler.getJuegoModel().getTitulo()}"></td>
+								<td th:text="${alquiler.juego.getTitulo()}"></td>
 								<td><span th:text="${alquiler.fechaAlquiler}"></span></td>
-								<td><span th:text="${alquiler.fechaDevolucion}"></span></td>
+                                <td><span th:text="${alquiler.fechaDevolucion}"></span></td>
+                                <!-- <td th:if="${alquiler.juego.isAlquilado()}"><a onclick="return confirm('Desea entregar el juego a la tienda?')" th:href="@{'/alquileres/devolucion/' + ${alquiler.juego.getId()}}">Devolver</a></td>
+                                <td th:text="${alquiler.juego.isAlquilado() == false} ? 'Ya devuelto'">Ya devuelto</td> -->
 							</tr>
 						</tbody>
 	            	</table>
@@ -132,7 +157,7 @@
 						</thead>
 						<tbody>
 							<tr scope="row" th:each="compra : ${ventasModel}">
-								<td th:text="${compra.getJuegoModel().getTitulo()}"></td>
+								<td th:text="${compra.juego.getTitulo()}"></td>
 								<td><span th:text="${compra.fecha}">Fecha</span></td>
 							</tr>
 						</tbody>
@@ -163,12 +188,12 @@
 						</thead>
 						<tbody>
 							<tr scope="row" th:each="torneo : ${participacionesModel}">
-								<td th:text="${torneo.getCompeticion().getNombre()}"></td>
-								<td th:text="${torneo.getCompeticion().getFecha()}"></td>
-								<td th:text="${torneo.getCompeticion().getLugar()}"></td>
-								<td th:text="${torneo.getCompeticion().getJuego().getTitulo()}"></td>
+								<td th:text="${torneo.competicion.getNombre()}"></td>
+								<td th:text="${torneo.competicion.getFecha()}"></td>
+								<td th:text="${torneo.competicion.getLugar()}"></td>
+								<td th:text="${torneo.competicion.getJuego().getTitulo()}"></td>
 								<td th:text="${torneo.posicion != 0} ? ${torneo.posicion} : 'No disputado'"></td>
-								<td><a onclick="return confirm('Está seguro de cancelar su participación?')" th:href="@{'/participaciones/delete/' + ${torneo.id}}"><i class="far fa-trash-alt"></i></a></td>
+								<td th:if="${torneo.posicion == 0}"><a onclick="return confirm('Está seguro de cancelar su participación?')" th:href="@{'/participaciones/delete/' + ${torneo.id}}"><i class="far fa-trash-alt"></i></a></td>
 							</tr>
 						</tbody>
 	            	</table>

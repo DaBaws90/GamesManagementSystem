@@ -221,16 +221,25 @@ a.article, a.article:hover {
 }
 
 .fa-home.profile{
-    position: absolute;
-    left: 215px;
-    top: 21%;
+    position: relative;
+    left: 225px;
 
 }
 
 .fa-pencil-alt.profile{
-	position: absolute;
-    left: 215px;
-    top: 31%;
+	position: relative;
+    left: 225px;
+}
+
+li.active a{
+    margin-left: -20px;
+}
+
+ul.components li:nth-child(4) a{
+    margin-left: -20px;
+}
+li.active a:nth:child(2){
+    margin-left: -20px;
 }
 
 .btn-logOut{

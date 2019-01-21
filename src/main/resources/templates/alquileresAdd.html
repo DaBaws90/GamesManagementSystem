@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Rent Games Page</title>
+</head>
+<body>
+	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+	
+	<div style="min-height: 85.9vh;" class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5">
+				<div class="text-center">
+					<h2>Alquilar juego</h2>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-3">
+				<div class="alert alert-danger alert-dismissible fade show text-center" th:if="${rent == 0}">Hubo un error al alquilar el juego
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+            </div>
+            <div class="col-md-8 offset-md-2 mt-3">
+				<div class="alert alert-danger alert-dismissible fade show text-center" th:if="${stock == 0}">No hay suficiente stock del juego seleccionado
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5">
+				<div class="text-center">
+                    <form th:action="@{/alquileres/insert}" th:object="${alquilerModel}" method="POST">
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="juego">Juego seleccionado</label>
+							<div class="col-md-10">
+								<select class="form-control" th:field="*{juego.id}" required="required">
+									<option th:value="${juegoModel.id}" th:text="${juegoModel.titulo}" selected="selected"></option>
+								</select>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('juego')}" th:errors="*{juego}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="fechaDevolucion">Fecha de devolución</label>
+							<div class="col-md-10">
+								<input class="form-control" type="date" th:field="*{fechaDevolucion}"/>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('fechaDevolucion')}" th:errors="*{fechaDevolucion}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+                        </div>
+
+						<div class="form-group row">
+							<div class="col-md-12 text-center mt-5">
+                                <button th:if="${juegoModel.alquilado == false}" type="submit" class="btn btn-primary mt-3 mb-5">Alquilar juego</button>
+                                <span style="position: relative; top: 20px;" class="text-muted" th:if="${juegoModel.alquilado == true}">Ya está alquilado</span>
+								<a class="float-left mt-4" th:href="@{'/juegos/index/alquileres'}"><i class="fas fa-chevron-left"> </i> Cancelar</a>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
+</body>
+</html>

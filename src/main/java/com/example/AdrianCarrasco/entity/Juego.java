@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -71,9 +69,8 @@ public class Juego {
 	@OneToMany(mappedBy = "juego", cascade = CascadeType.REMOVE)
 	private Set<Alquiler> alquileres = new HashSet<Alquiler>();
 	
-	@OneToOne(mappedBy = "juego", cascade = CascadeType.REMOVE, // Podría ser ALL si fallase
-			fetch = FetchType.EAGER)
-	private Venta venta;
+	@OneToMany(mappedBy = "juego", cascade = CascadeType.REMOVE) // Podría ser ALL si fallase
+	private Set<Venta> ventas = new HashSet<Venta>();
 
 	@OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Competicion> competiciones = new HashSet<Competicion>();
@@ -84,7 +81,7 @@ public class Juego {
 
 	public Juego(int id, String titulo, String descripcion, Date lanzamiento, String pegi, String tipo, String caratula,
 			boolean alquilado, float precio, int stock, Set<Categoria> categorias, Set<Plataforma> plataformas,
-			Set<Alquiler> alquileres, Venta venta, Set<Competicion> competiciones) {
+			Set<Alquiler> alquileres, Set<Venta> ventas, Set<Competicion> competiciones) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -99,7 +96,7 @@ public class Juego {
 		this.categorias = categorias;
 		this.plataformas = plataformas;
 		this.alquileres = alquileres;
-		this.venta = venta;
+		this.ventas = ventas;
 		this.competiciones = competiciones;
 	}
 
@@ -207,12 +204,12 @@ public class Juego {
 		this.alquileres = alquileres;
 	}
 
-	public Venta getVenta() {
-		return venta;
+	public Set<Venta> getVentas() {
+		return ventas;
 	}
 
-	public void setVenta(Venta venta) {
-		this.venta = venta;
+	public void setVentas(Set<Venta> ventas) {
+		this.ventas = ventas;
 	}
 
 	public Set<Competicion> getCompeticiones() {
@@ -222,6 +219,16 @@ public class Juego {
 	public void setCompeticiones(Set<Competicion> competiciones) {
 		this.competiciones = competiciones;
 	}
+	
+	public void addCategoria(Categoria categoria) {
+        this.categorias.add(categoria);
+        categoria.getJuegos().add(this);
+    }
+ 
+    public void removeCategoria(Categoria categoria) {
+        this.categorias.remove(categoria);
+        categoria.getJuegos().remove(this);
+    }
 
 	@Override
 	public String toString() {

@@ -10,13 +10,13 @@ import com.example.AdrianCarrasco.model.VentaModel;
 
 public interface VentaService {
 	public abstract List<VentaModel> listAllVentas();
-	public abstract Venta addVenta(VentaModel ventaModel);
+	public abstract Venta addVenta(VentaModel ventaModel, int amount);
 	public abstract Venta updateVenta(VentaModel ventaModel);
 	public abstract boolean deleteVenta(int id);
 	
 	public abstract VentaModel findById(int id);
 	public abstract List<VentaModel> findAllByFecha(Date fecha);
-	public abstract VentaModel findByJuego(JuegoModel juegoModel);
+	public abstract List<VentaModel> findAllByJuego(JuegoModel juegoModel);
 	public abstract List<VentaModel> findAllByUser(UserModel userModel);
 	
 	public abstract VentaModel findByFactura(String factura); 

@@ -69,7 +69,8 @@
 									<button type="submit" class="btn btn-primary mt-3 mb-3">
 										<i class="far fa-save"></i> Save changes
 									</button>
-									<!-- <a class="float-left mt-4" th:href="@{'/login/'}"><i class="fas fa-chevron-left"> </i> AtrÃ¡s</a> -->
+                                    <a sec:authorize="hasRole('ADMIN')" class="float-left mt-4" th:href="@{'/users/'}"><i class="fas fa-chevron-left"></i> Atrás</a>
+                                    <a sec:authorize="hasRole('USER')" class="float-left mt-4" th:href="@{'/users/profile'}"><i class="fas fa-chevron-left"></i> Atrás</a>
 								</div>
 							</div>
 						</form>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Purchase Games Page</title>
+</head>
+<body>
+	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+	
+	<div style="min-height: 85.9vh;" class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5">
+				<div class="text-center">
+					<h2>Tramitar pedido</h2>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-3">
+				<div class="alert alert-danger alert-dismissible fade show text-center" th:if="${sold == 0}">Hubo un error al realizar el pedido
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+            </div>
+            <div class="col-md-8 offset-md-2 mt-3">
+				<div class="alert alert-danger alert-dismissible fade show text-center" th:if="${stock == 0}">No hay suficiente stock del juego seleccionado
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5">
+				<div class="text-center">
+                    <form th:action="@{/ventas/insert}" th:object="${ventaModel}" method="POST">
+                    <!-- No sé porqué, pero no recibe el id del usuario, aí que lo inyecto directamente al método de añadir venta, usando el usuario 
+                    que esté autenticado en ese momento, mediante SecurityContextHolder -->
+                        <!-- <input type="hidden" th:field="*{user.id}" value="${userModel.id}"> -->
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="juego">Juego seleccionado</label>
+							<div class="col-md-10">
+								<select class="form-control" th:field="*{juego.id}" required="required">
+									<option th:value="${juegoModel.id}" th:text="${juegoModel.titulo}" selected="selected"></option>
+								</select>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('juego')}" th:errors="*{juego}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="amount">Unidades</label>
+							<div class="col-md-10">
+								<input class="form-control" min="1" type="number" name="amount"/>
+							</div>
+                        </div>
+
+						<div class="form-group row">
+							<div class="col-md-12 text-center mt-5">
+                                <button th:if="${juegoModel.stock > 0}" type="submit" class="btn btn-primary mt-3 mb-5">Tramitar pedido</button>
+                                <span style="position: relative; top: 20px;" class="text-muted" th:if="${juegoModel.stock < 1}">No hay stock en estos momentos</span>
+								<a class="float-left mt-4" th:href="@{'/juegos/index/compras'}"><i class="fas fa-chevron-left"> </i> Cancelar</a>
+							</div>
+						</div>
+						
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
+</body>
+</html>

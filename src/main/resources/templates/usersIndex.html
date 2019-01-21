@@ -33,7 +33,7 @@
 								<td th:text="${user.nombre}"></td>
 								<td th:text="${user.username}"></td>
 								<td th:text="${user.enabled} ? 'Sí' : 'No'"></td>
-								<td><a onclick="return confirm('Editar?')" th:href="@{'/users/editUser/' + ${user.id}}"><i class="far fa-edit"></i></a></td>
+								<td><a onclick="return confirm('Editar?')" th:href="@{'/users/editUser?id=' + ${user.id}}"><i class="far fa-edit"></i></a></td>
 								<td><a onclick="return confirm('Deshabilitar?')" th:href="@{'/users/disable/' + ${user.id}}"><i class="fas fa-times"></i></a></td>
 								<td><a onclick="return confirm('Eliminar?')" th:href="@{'/users/delete/' + ${user.id}}"><i class="far fa-trash-alt"></i></a></td>
 							</tr>
@@ -49,18 +49,38 @@
 					<h5 class="text-muted">There is no users registered at this moment</h5>
 				</div>
 			</div>
-		</div>
-		
-		<div class="row">
+        </div>
+        
+        <div class="row">
 			<div class="col-md-8 offset-md-2 text-center">
-				<div th:if="${edited == 1}" class="alert alert-info">Se editó el usuario con éxito</div>
-				<div th:if="${deleted == 1}" class="alert alert-info" th:text="'Usuario ' + ${username} + ' eliminado con éxito'"></div>
-				<div th:if="${deleted == 0}" class="alert alert-info" th:text="'No se pudo eliminar el usuario' + ${username}"></div>
-				<div th:if="${disabled == 1}" class="alert alert-info" th:text="'Se deshabilitó el usuario ' + ${username} + ' con éxito'"></div>
-				<div th:if="${disabled == 0}" class="alert alert-info" th:text="'No se pudo deshabilitar el usuario ' + ${username}"></div>
-				<div th:if="${insert == 1}" class="alert alert-info">Se agregó con éxito el usuario</div>
+				<div th:if="${edited == 1}" class="alert alert-info alert-dismissible fade show text-center">Se editó el usuario con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${deleted == 1}" class="alert alert-info alert-dismissible fade show text-center" th:text="'Usuario ' + ${username} + ' eliminado con éxito'">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${deleted == 0}" class="alert alert-danger alert-dismissible fade show text-center" th:text="'No se pudo eliminar el usuario' + ${username}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${disabled == 1}" class="alert alert-info alert-dismissible fade show text-center" th:text="'Se deshabilitó el usuario ' + ${username} + ' con éxito'">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+                <div th:if="${disabled == 0}" class="alert alert-danger alert-dismissible fade show text-center" th:text="'No se pudo deshabilitar el usuario ' + ${username}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
 			</div>
-		</div>
+        </div>
+        
 	</div>
 	
 	

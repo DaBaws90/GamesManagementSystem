@@ -21,6 +21,7 @@ import com.example.AdrianCarrasco.component.MethodLogger;
 import com.example.AdrianCarrasco.model.CompeticionModel;
 import com.example.AdrianCarrasco.service.CompeticionService;
 import com.example.AdrianCarrasco.service.JuegoService;
+import com.example.AdrianCarrasco.service.UserService;
 
 import constant.Constants;
 
@@ -39,6 +40,10 @@ public class CompeticionesController {
 	@Autowired
 	@Qualifier("juegoServiceImpl")
 	private JuegoService juegoService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	@GetMapping("/")
 	public RedirectView toIndex() {
@@ -59,7 +64,7 @@ public class CompeticionesController {
 		CompeticionModel competicionModel = competicionService.findById(id);
 		logger.info("GET", "editCompeticionForm", "COMPETICIONES_EDIT", "CompeticionesController", "COMPETICION", "EDITED", competicionModel);
 		mav.addObject("competicionModel", competicionModel);
-		mav.addObject("juegosModels", juegoService.listAllJuegos());
+//		mav.addObject("juegosModels", juegoService.listAllJuegos());
 		return mav;
 	}
 	
@@ -151,5 +156,6 @@ public class CompeticionesController {
 		}
 		return mav;
 	}
+	
 	
 }

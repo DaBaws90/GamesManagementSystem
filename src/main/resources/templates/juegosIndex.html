@@ -68,10 +68,26 @@
 		
 		<div class="row">
 			<div class="col-md-8 offset-md-2 text-center">
-				<div th:if="${edited == 1}" class="alert alert-info text-center">Se realizó la edición con éxito</div>
-				<div th:if="${deleted == 1}" class="alert alert-info text-center">Se eliminó el registro con éxito</div>
-				<div th:if="${deleted == 0}" class="alert alert-info text-center">No se pudo eliminar el registro</div>
-				<div th:if="${insert == 1}" class="alert alert-info text-center">Se añadió con éxito el juego</div>
+				<div th:if="${edited == 1}" class="alert alert-info alert-dismissible fade show text-center">Se realizó la edición con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${deleted == 1}" class="alert alert-info alert-dismissible fade show text-center">Se eliminó el registro con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${deleted == 0}" class="alert alert-danger alert-dismissible fade show text-center">No se pudo eliminar el registro
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${insert == 1}" class="alert alert-info alert-dismissible fade show text-center">Se añadió con éxito el juego
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 package com.example.AdrianCarrasco.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -7,6 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -59,14 +62,18 @@ public class UserController {
 	@GetMapping("/editUser")
 	public ModelAndView editUserForm(@RequestParam(name = "id", required = false) Integer id) {
 		ModelAndView mav = new ModelAndView(Constants.USERS_EDIT);
+//		Recuperamos los roles del usuario logueado para comprobar si es ADMIN o USER
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		boolean condition = Arrays.asList(auth.getAuthorities()).contains("ROLE_ADMIN");
-		if(auth.getAuthorities().contains("ROLE_ADMIN")) {
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		
+		if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+//			Soy ROLE_ADMIN, uso el ID del RequestParam
 			UserModel temp = userService.findById(id);
 			logger.info("GET", "editUserForm", "USERS_EDIT", "UserController (AS ADMIN)", "USER", "EDITED", temp);
 			mav.addObject("userModel", temp);
 		}
 		else{
+//			Soy ROLE_USER, no recibo ID desde el perfil (Editar perfil del menú desplegable)
 			UserModel temp = userService.findByUsername(auth.getName());
 			logger.info("GET", "editUserForm", "USERS_EDIT", "UserController (AS USER)", "USER", "EDITED", temp);
 			mav.addObject("userModel", temp);
@@ -80,6 +87,8 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		logger.info("POST", "updateUser", "USERS_EDIT", "UserController", "USER", "UPDATED", userModel);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		
 		if(bindingResult.hasErrors()) {
 			mav.setViewName(Constants.USERS_EDIT);
 			logger.validationError();
@@ -88,7 +97,7 @@ public class UserController {
 			if(userService.findByUsername(userModel.getUsername()).getEmail().equals(userModel.getEmail())) {
 				if(userService.updateUser(userModel) != null) {
 					logger.success("USER", "EDITED", userModel);
-					if(auth.getAuthorities().contains("ROLE_ADMIN")) {
+					if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 						mav.setViewName("redirect:/users/index");
 					}
 					else {
@@ -106,7 +115,7 @@ public class UserController {
 				if(userService.checkEmailAvailability(userModel.getEmail())) {
 					if(userService.updateUser(userModel) != null) {
 						logger.success("USER", "EDITED", userModel);
-						if(auth.getAuthorities().contains("ROLE_ADMIN")) {
+						if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 							mav.setViewName("redirect:/users/index");
 						}
 						else {

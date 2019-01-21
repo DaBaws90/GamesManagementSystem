@@ -8,13 +8,13 @@ public class AlquilerModel {
 	
 	private int id;
 	
-	@NotNull
+//	@NotNull
 	private Date fechaAlquiler;
 	
 	@NotNull
 	private Date fechaDevolucion;
 	
-	@NotNull
+//	@NotNull
 	private UserModel userModel;
 	
 	@NotNull

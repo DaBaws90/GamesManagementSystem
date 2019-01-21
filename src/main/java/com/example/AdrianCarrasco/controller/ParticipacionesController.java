@@ -1,5 +1,6 @@
 package com.example.AdrianCarrasco.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -7,6 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -68,15 +71,16 @@ public class ParticipacionesController {
 		ModelAndView mav = new ModelAndView(Constants.PARTICIPACIONES_EDIT);
 		ParticipacionModel participacionModel = participacionService.findById(id);
 		logger.info("GET", "editParticipacionForm", "PARTICIPACIONES_EDIT", "ParticipacionesController", "PARTICIPACION", "EDITED", participacionModel);
-		mav.addObject("participacionModel", participacionModel)
-		.addObject("competicionesModels", competicionService.listAllCompeticiones());
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(auth.getAuthorities().contains("ROLE_ADMIN")) {
-			mav.addObject("userModel", participacionModel.getUser());
-		}
-		else {
-			mav.addObject("userModel", userService.findByUsername(auth.getName()));
-		}
+		mav.addObject("participacionModel", participacionModel);
+//			.addObject("competicionesModels", competicionService.listAllCompeticiones())
+//			.addObject("userModel", participacionModel.getUser());
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		if(auth.getAuthorities().contains("ROLE_ADMIN")) {
+//			mav.addObject("userModel", participacionModel.getUser());
+//		}
+//		else {
+//			mav.addObject("userModel", userService.findByUsername(auth.getName()));
+//		}
 		return mav;
 	}
 	
@@ -90,22 +94,15 @@ public class ParticipacionesController {
 			mav.setViewName(Constants.PARTICIPACIONES_EDIT);
 		}
 		else {
-			if(participacionService.checkAvailability(participacionModel)) {
-				if(participacionService.updateParticipacion(participacionModel) != null) {
-					logger.success("PARTICIPACION", "UPDATED", participacionModel);
-					mav.setViewName("redirect:/participaciones/index");
-					redirectAttributes.addFlashAttribute("edited", 1);
-				}
-				else {
-					logger.unsuccessful("UPDATE", "PARTICIPACION", participacionModel);
-					mav.setViewName("redirect:/participaciones/editParticipacion/" + participacionModel.getId());
-					redirectAttributes.addFlashAttribute("edited", 0);
-				}
+			if(participacionService.updateParticipacion(participacionModel) != null) {
+				logger.success("PARTICIPACION", "UPDATED", participacionModel);
+				mav.setViewName("redirect:/participaciones/index");
+				redirectAttributes.addFlashAttribute("edited", 1);
 			}
 			else {
-				logger.regularMessage("THE USER IS ALREADY REGISTERED IN THE TOURNAMENT");
+				logger.unsuccessful("UPDATE", "PARTICIPACION", participacionModel);
 				mav.setViewName("redirect:/participaciones/editParticipacion/" + participacionModel.getId());
-				redirectAttributes.addFlashAttribute("exists", 1);
+				redirectAttributes.addFlashAttribute("edited", 0);
 			}
 		}
 		return mav;
@@ -120,10 +117,12 @@ public class ParticipacionesController {
 				.addObject("userModel", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 	}
 	
+//	El adminstrador no debería añadir participaciones, solo el usuario podrá apuntarse a un torneo 
 	@PostMapping("/insert")
 	public ModelAndView addParticipacion(@Valid @ModelAttribute("participacionModel") ParticipacionModel participacionModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, @ModelAttribute("userModel") UserModel userModel) {
 		ModelAndView mav = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		logger.info("POST", "addParticipacion", "PARTICIPACIONES_ADD", "ParticipacionesController", "PARTICIPACION", "INSERTED", participacionModel);
 		if(bindingResult.hasErrors()) {
 			logger.validationError();
@@ -133,7 +132,12 @@ public class ParticipacionesController {
 			if(participacionService.checkAvailability(participacionModel)) {
 				if(participacionService.addParticipacion(participacionModel, userModel) != null) {
 					logger.success("PARTICIPACION", "INSERTED", participacionModel);
-					mav.setViewName("redirect:/participaciones/index");
+//					if(auth.getAuthorities().contains("ROLE_USER")) {
+					mav.setViewName("redirect:/users/profile");
+//					}
+//					else {
+//						mav.setViewName("redirect:/participaciones/index");
+//					}
 					redirectAttributes.addFlashAttribute("insert", 1);
 				}
 				else {
@@ -151,13 +155,23 @@ public class ParticipacionesController {
 		return mav;
 	}
 	
+//	Aquí ocurre lo mismo, solament el usuario podrá cancelar su participación en un torneo. Aunque dejaré la opción y la lógica implementada para que el admin pueda cancelar alguna.
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteParticipacion(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
-		ModelAndView mav = new ModelAndView(Constants.PARTICIPACIONES_INDEX);
+		ModelAndView mav = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		
 		String participacionModel = participacionService.findById(id).toString();
 		logger.info("GET", "deleteParticipacion", "PARTICIPACIONES_INDEX", "ParticipacionesController", "PARTICIPACION", "DELETED", participacionModel);
 		if(participacionService.deleteParticipacion(id)) {
 			logger.success("PARTICIPACION", "DELETED", participacionModel);
+			if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+				mav.setViewName("redirect:/participaciones/index");
+			}
+			else {
+				mav.setViewName("redirect:/users/profile");
+			}
 			redirectAttributes.addFlashAttribute("deleted", 1);
 		}
 		else {

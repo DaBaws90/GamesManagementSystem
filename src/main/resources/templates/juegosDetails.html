@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Order Page</title>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+    
+	<div class="container-fluid background">
+        <div style="min-height: 85.9vh;" class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 mt-5 mb-3 text-center">
+                    <h2 class="welcomeMssg">Tramitar pedido</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div style="height: 1800px;" class="card bg-dark text-white border-info text-center">
+                        <div class="card-header bg-info border-info">
+                            <h4 style="color: black;" th:text="${juegoModel.titulo}"></h4>
+                        </div>
+                        <div class="card-body border-info">
+                            <img style="height: 800px;" class="card-img img-fluid rounded mx-auto d-block" 
+                                th:src="@{/images/} + ${juegoModel.caratula != null ? juegoModel.caratula : 'default.jpg'}" alt="Videogame's image">
+                        </div>
+                        <div style="height: 200px;" class="card-body border-info">
+                            <p style="color: white;" th:text="${juegoModel.descripcion}"></p>
+                        </div>
+                        <div class="card-body border-info">
+                            <p th:text="${juegoModel.categorias.isEmpty()} ? 'Este juego no pertenece a ninguna categoría' : 'Categorías'"></p>
+                            <span style="color: white;" th:each="cat, row : ${juegoModel.categorias}" th:text="${row.last} ? ${cat.nombre} : ${cat.nombre} + ', ' "> </span>
+                        </div>
+                        <div class="card-body border-info">
+                            <p th:text="${juegoModel.plataformas.isEmpty()} ? 'Este juego no tiene plataformas asignadas' : 'Plataformas'"></p>
+                            <span style="color: white;" th:each="plat, row : ${juegoModel.plataformas}" th:text="${row.last} ? ${plat.nombre} : ${plat.nombre} + ', ' "> </span>
+                        </div>
+                        <ul class="list-group list-group-flush border-info">
+                            <li class="list-group-item border-info">
+                                <small class="text-muted" th:text="${juegoModel.pegi eq 'OK'} ? 'Para todos los públicos' : 'PEGI ' + ${juegoModel.pegi}"></small>
+                            </li>
+                            <li class="list-group-item border-info">
+                                <small class="text-muted" th:text="'Fecha de lanzamiento: ' + ${juegoModel.lanzamiento}"></small>
+                            </li>
+                        </ul>
+                        <div sec:authorize="isAuthenticated()" class="card-footer bg-light">
+                            <div th:if="${transaccion eq 'Venta'}"> 
+                                <a th:if="${juegoModel.stock > 0}" th:href="@{'/ventas/venderJuego/' + ${juegoModel.id}}" class="btn btn-info"><i class="fas fa-shopping-cart"></i> Comprar</a>
+                                <p th:if="${juegoModel.stock < 1}">No hay stock en estos momentos</p>
+                            </div>
+                            <div th:if="${transaccion eq 'Alquiler'}">
+                                <a th:if="${juegoModel.alquilado == false}" th:href="@{'/alquileres/alquilarJuego/' + ${juegoModel.id}}" class="btn btn-info"><i class="fas fa-shopping-cart"></i> Alquilar</a>
+                                <p th:if="${juegoModel.alquilado == true}">No disponible en estos momentos</p>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()" class="card-footer bg-light">
+                            <span style="color: black;">Debes estar <a th:href="@{'/login'}">logueado</a> para comprar o alquilar un juego</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <div th:if="${deleted == 1}" class="alert alert-info alert-dismissible fade show text-center">Se eliminó el registro con éxito
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div th:if="${deleted == 0}" class="alert alert-danger alert-dismissible fade show text-center">No se pudo eliminar el registro
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+	
+	<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
+</body>
+</html>

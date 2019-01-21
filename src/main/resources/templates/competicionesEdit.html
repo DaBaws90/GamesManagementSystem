@@ -75,11 +75,13 @@
 							<label class="col-md-2 col-form-label" for="lugar">Juego</label>
 							<div class="col-md-10">
 								<select class="form-control" th:field="*{juego.id}">
-									<!-- <option disabled>Select a game...</option> -->
-									<option th:each="juego : ${juegosModels}" 
+                                    <option th:value="${competicionModel.juego.getId()}"
+                                        th:text="${competicionModel.juego.getTitulo()}">
+                                    </option>
+									<!-- <option th:each="juego : ${juegosModels}" 
 										th:value="${juego.id}"
 										th:text="${juego.titulo}">
-									</option>
+									</option> -->
 								</select>
 								<p class="text-center alert alert-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></p>
 							</div>

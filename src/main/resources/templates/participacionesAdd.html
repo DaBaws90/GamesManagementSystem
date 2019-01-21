@@ -18,11 +18,15 @@
 		
 		<div class="row">
 				<div class="col-md-8 offset-md-2">
-					<div class="alert alert-danger text-center" th:if="${insert == 0}">No se pudo registrar la solicitud
-					
+					<div class="alert alert-danger alert-dismissible fade show text-center mt-4" th:if="${insert == 0}">No se pudo registrar la solicitud
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
 					</div>
-					<div class="text-center alert alert-danger" th:if="${exists == 1}">Usted ya tiene una solicitud de participación para esta competición
-					
+					<div class="text-center alert alert-danger alert-dismissible fade show mt-4" th:if="${exists == 1}">Usted ya tiene una solicitud de participación para esta competición
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
 					</div>
 				</div>
 			</div>

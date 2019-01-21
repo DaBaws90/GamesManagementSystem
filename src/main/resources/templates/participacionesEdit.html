@@ -23,11 +23,6 @@
 				    	<span aria-hidden="true">&times;</span>
 				  	</button>
 				</div>
-				<div class="mt-5 alert alert-danger alert-dismissible fade show text-center" th:if="${exists == 1}">Una participación igual ya está registrada
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    	<span aria-hidden="true">&times;</span>
-				  	</button>
-				</div>
 			</div>
 		</div>
 		
@@ -35,15 +30,14 @@
 			<div class="col-md-8 offset-md-2 mt-5">
 				<div class="text-center">
 					<form th:action="@{/participaciones/update}" th:object="${participacionModel}" method="POST">
-						<!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
 						<input type="hidden" th:field="*{id}">
 						
-						<div class="form-group row">
+						<div class="form-group row mt-4">
 							<label class="col-md-2 col-form-label" for="user">Usuario</label>
 							<div class="col-md-10">
 								<select class="form-control" th:field="*{user.id}">
-									<option th:value="${user.id}"
-										th:text="${user.nombre} + ' (' + ${user.username} + ')'">
+									<option th:value="${participacionModel.user.getId()}"
+										th:text="${participacionModel.user.getNombre()} + ' (' + ${participacionModel.user.getUsername()} + ')'">
 									</option>
 								</select>
 								<p class="text-center alert alert-danger" th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></p>
@@ -53,8 +47,10 @@
 						<div class="form-group row">
 							<label class="col-md-2 col-form-label" for="competicion">Competición</label>
 							<div class="col-md-10">
-								<select class="form-control" th:field="*{participacionModel.competicionModel.getId()}">
-									<option selected="selected" disabled="disabled" th:value="${participacionModel.competicionModel.getId()}" th:text="${participacionModel.competicionModel.getNombre()}"></option>
+								<select class="form-control" th:field="*{competicion.id}">
+                                    <option th:value="${participacionModel.competicion.getId()}" 
+                                        th:text="${participacionModel.competicion.getNombre()}">
+                                    </option>
 								</select>
 							</div>
 						</div>
@@ -62,13 +58,13 @@
 						<div class="form-group row">
 							<label class="col-md-2 col-form-label" for="posicion">Posición</label>
 							<div class="col-md-10">
-								<input class="form-control" type="number" th:field="*{posicion}"/>
+								<input class="form-control" min="1" type="number" th:field="*{posicion}"/>
 								<p class="text-center alert alert-danger" th:if="${#fields.hasErrors('posicion')}" th:errors="*{posicion}"></p>
 							</div>
 						</div>
 						
 						<div class="form-group row">
-							<div class="col-md-12 text-center">
+							<div class="col-md-12 text-center mt-4">
 								<button type="submit" class="btn btn-primary mt-3 mb-5">Editar</button>
 								<a class="float-left mt-4" th:href="@{'/participaciones/'}"><i class="fas fa-chevron-left"> </i> Atrás</a>
 							</div>

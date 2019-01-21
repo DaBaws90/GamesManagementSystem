@@ -11,13 +11,13 @@
         <div style="min-height: 85.9vh;" class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2 mt-5 mb-3 text-center">
-                    <h2 class="welcomeMssg mt-5">Compra ya tus juegos favoritos!</h2>
+                    <h2 class="welcomeMssg mt-5">Alquila ya tus juegos favoritos!</h2>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-8 offset-md-2 text-center">
-                    <div th:if="${sold == 1}" class="alert alert-info alert-dismissible fade show text-center">Se realizó el pedido con éxito
+                    <div th:if="${rent == 1}" class="alert alert-info alert-dismissible fade show text-center">Se realizó el pedido con éxito
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -25,37 +25,37 @@
                 </div>
             </div>
 
-            <div th:if="${!juegosCompra.isEmpty()}" class="row mt-4">
+            <div th:if="${!juegosAlquiler.isEmpty()}" class="row mt-4">
                 <div class="col-md-10 offset-md-1">
-                    <div th:each="juego, row: ${juegosCompra}" th:with="indexes=${ {1,0} }" th:if="${row.count % 2 == 0 or row.last}" class="row mt-5">
+                    <div th:each="juego, row: ${juegosAlquiler}" th:with="indexes=${ {1,0} }" th:if="${row.count % 2 == 0 or row.last}" class="row mt-5">
                         <!-- Show all rows except the leftovers -->
                         <div class="col-md-6" th:each="i : ${indexes}" th:with="juegoIndex=(${row.index} - ${i})" th:if="${row.count % 2 == 0}">
                             <div style="min-height: 900px;" class="card bg-dark text-white border-info text-center">
                                 <div class="card-header bg-info border-info">
-                                    <h4 style="color: black;" th:text="${juegosCompra[juegoIndex].titulo}"></h4>
+                                    <h4 style="color: black;" th:text="${juegosAlquiler[juegoIndex].titulo}"></h4>
                                 </div>
                                 <div class="card-body border-info">
                                     <img style="height: 400px;" class="card-img img-fluid rounded mx-auto d-block" 
-                                        th:src="@{/images/} + ${juegosCompra[juegoIndex].caratula != null ? juegosCompra[juegoIndex].caratula : 'default.jpg'}" alt="Videogame's image">
+                                        th:src="@{/images/} + ${juegosAlquiler[juegoIndex].caratula != null ? juegosAlquiler[juegoIndex].caratula : 'default.jpg'}" alt="Videogame's image">
                                 </div>
                                 <div class="card-body border-info">
-                                    <p th:text="${juegosCompra[juegoIndex].categorias.isEmpty()} ? 'Este juego no pertenece a ninguna categoría' : 'Categorías'"></p>
-                                    <span style="color: white;" th:each="cat, row : ${juegosCompra[juegoIndex].categorias}" th:text="${row.last} ? ${cat.nombre} : ${cat.nombre} + ', ' "> </span>
+                                    <p th:text="${juegosAlquiler[juegoIndex].categorias.isEmpty()} ? 'Este juego no pertenece a ninguna categoría' : 'Categorías'"></p>
+                                    <span style="color: white;" th:each="cat, row : ${juegosAlquiler[juegoIndex].categorias}" th:text="${row.last} ? ${cat.nombre} : ${cat.nombre} + ', ' "> </span>
                                 </div>
                                 <div class="card-body border-info">
-                                    <p th:text="${juegosCompra[juegoIndex].plataformas.isEmpty()} ? 'Este juego no tiene plataformas asignadas' : 'Plataformas'"></p>
-                                    <span style="color: white;" th:each="plat, row : ${juegosCompra[juegoIndex].plataformas}" th:text="${row.last} ? ${plat.nombre} : ${plat.nombre} + ', ' "> </span>
+                                    <p th:text="${juegosAlquiler[juegoIndex].plataformas.isEmpty()} ? 'Este juego no tiene plataformas asignadas' : 'Plataformas'"></p>
+                                    <span style="color: white;" th:each="plat, row : ${juegosAlquiler[juegoIndex].plataformas}" th:text="${row.last} ? ${plat.nombre} : ${plat.nombre} + ', ' "> </span>
                                 </div>
                                 <ul class="list-group list-group-flush border-info">
                                     <li class="list-group-item border-info">
-                                        <small class="text-muted" th:text="${juegosCompra[juegoIndex].pegi eq 'OK'} ? 'Para todos los públicos' : 'PEGI ' + ${juegosCompra[juegoIndex].pegi}"></small>
+                                        <small class="text-muted" th:text="${juegosAlquiler[juegoIndex].pegi eq 'OK'} ? 'Para todos los públicos' : 'PEGI ' + ${juegosAlquiler[juegoIndex].pegi}"></small>
                                     </li>
                                     <li class="list-group-item border-info">
                                         <small class="text-muted" th:text="'Fecha de lanzamiento: ' + ${juegosCompra[juegoIndex].lanzamiento}"></small>
                                     </li>
                                 </ul>
                                 <div class="card-footer bg-light">   
-                                    <a th:href="@{'/juegos/details?transaccion=Venta&id=' + ${juegosCompra[juegoIndex].id}}" class="btn btn-info"><i class="fas fa-search"></i> Detalles</a>
+                                    <a th:href="@{'/juegos/details?transaccion=Alquiler&id=' + ${juegosAlquiler[juegoIndex].id}}" class="btn btn-info"><i class="fas fa-search"></i> Detalles</a>
                                 </div>
                             </div>
                         </div>
@@ -63,30 +63,30 @@
                         <div class="col-md-6 offset-md-3 mb-5" th:each="i : ${indexes}" th:with="juegoIndex=(${row.index} - ${i})" th:if="${row.last} and ${row.count % 2 != 0} and ${i < row.count % 2}">
                             <div style="min-height: 900px;" class="card bg-dark text-white border-info text-center">
                                 <div class="card-header bg-info border-info">
-                                    <h4 style="color: black;" th:text="${juegosCompra[juegoIndex].titulo}"></h4>
+                                    <h4 style="color: black;" th:text="${juegosAlquiler[juegoIndex].titulo}"></h4>
                                 </div>
                                 <div class="card-body border-info">
                                     <img style="height: 400px;" class="card-img img-fluid rounded mx-auto d-block" 
-                                        th:src="@{/images/} + ${juegosCompra[juegoIndex].caratula != null ? juegosCompra[juegoIndex].caratula : 'default.jpg'}" alt="Videogame's image">
+                                        th:src="@{/images/} + ${juegosAlquiler[juegoIndex].caratula != null ? juegosAlquiler[juegoIndex].caratula : 'default.jpg'}" alt="Videogame's image">
                                 </div>
                                 <div class="card-body border-info">
-                                    <p th:text="${juegosCompra[juegoIndex].categorias.isEmpty()} ? 'Este juego no pertenece a ninguna categoría' : 'Categorías'"></p>
-                                    <span style="color: white;" th:each="cat, row : ${juegosCompra[juegoIndex].categorias}" th:text="${row.last} ? ${cat.nombre} : ${cat.nombre} + ', ' "> </span>
+                                    <p th:text="${juegosAlquiler[juegoIndex].categorias.isEmpty()} ? 'Este juego no pertenece a ninguna categoría' : 'Categorías'"></p>
+                                    <span style="color: white;" th:each="cat, row : ${juegosAlquiler[juegoIndex].categorias}" th:text="${row.last} ? ${cat.nombre} : ${cat.nombre} + ', ' "> </span>
                                 </div>
                                 <div class="card-body border-info">
-                                    <p th:text="${juegosCompra[juegoIndex].plataformas.isEmpty()} ? 'Este juego no tiene plataformas asignadas' : 'Plataformas'"></p>
-                                    <span style="color: white;" th:each="plat, row : ${juegosCompra[juegoIndex].plataformas}" th:text="${row.last} ? ${plat.nombre} : ${plat.nombre} + ', ' "> </span>
+                                    <p th:text="${juegosAlquiler[juegoIndex].plataformas.isEmpty()} ? 'Este juego no tiene plataformas asignadas' : 'Plataformas'"></p>
+                                    <span style="color: white;" th:each="plat, row : ${juegosAlquiler[juegoIndex].plataformas}" th:text="${row.last} ? ${plat.nombre} : ${plat.nombre} + ', ' "> </span>
                                 </div>
                                 <ul class="list-group list-group-flush border-info">
                                     <li class="list-group-item border-info">
-                                        <small class="text-muted" th:text="${juegosCompra[juegoIndex].pegi eq 'OK'} ? 'Para todos los públicos' : 'PEGI ' + ${juegosCompra[juegoIndex].pegi}"></small>
+                                        <small class="text-muted" th:text="${juegosAlquiler[juegoIndex].pegi eq 'OK'} ? 'Para todos los públicos' : 'PEGI ' + ${juegosAlquiler[juegoIndex].pegi}"></small>
                                     </li>
                                     <li class="list-group-item border-info">
-                                        <small class="text-muted" th:text="'Fecha de lanzamiento: ' + ${juegosCompra[juegoIndex].lanzamiento}"></small>
+                                        <small class="text-muted" th:text="'Fecha de lanzamiento: ' + ${juegosAlquiler[juegoIndex].lanzamiento}"></small>
                                     </li>
                                 </ul>
                                 <div class="card-footer bg-light">   
-                                    <a th:href="@{'/juegos/details?transaccion=Venta&id=' + ${juegosCompra[juegoIndex].id}}" class="btn btn-info"><i class="fas fa-search"></i> Detalles</a>
+                                    <a th:href="@{'/juegos/details?transaccion=Alquiler&id=' + ${juegosAlquiler[juegoIndex].id}}" class="btn btn-info"><i class="fas fa-search"></i> Detalles</a>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
             
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <div th:if="${juegosCompra.isEmpty()}" class="text-center mt-3 flex-container-competicionesIndex">
+                    <div th:if="${juegosAlquiler.isEmpty()}" class="text-center mt-3 flex-container-competicionesIndex">
                         <h5 class="text-muted">Currently, there is any games registered in our system.</h5>
                     </div>
                 </div>

@@ -8,13 +8,13 @@ public class VentaModel {
 	
 	private int id;
 	
-	@NotNull
+//	@NotNull
 	private UserModel userModel;
 	
 	@NotNull
 	private JuegoModel juegoModel;
 	
-	@NotNull
+//	@NotNull
 	private Date fecha;
 	
 	private String factura;

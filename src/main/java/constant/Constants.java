@@ -47,9 +47,10 @@ public class Constants {
 	public static final String PARTICIPACIONES_EDIT = "participacionesEdit";
 	
 //	Alquileres templates
-	public static final String ALQUILERES_INDEX = "participacionesIndex";
-	public static final String ALQUILERES_ADD = "participacionesAdd";
-	public static final String ALQUILERES_EDIT = "participacionesEdit";
+	public static final String ALQUILERES_INDEX = "alquileresIndex";
+	public static final String ALQUILERES_PENDIENTES = "alquileresPendientes";
+	public static final String ALQUILERES_ADD = "alquileresAdd";
+	public static final String ALQUILERES_EDIT = "alquileresEdit";
 	
 //	Ventas templates
 	public static final String VENTAS_INDEX = "ventasIndex";

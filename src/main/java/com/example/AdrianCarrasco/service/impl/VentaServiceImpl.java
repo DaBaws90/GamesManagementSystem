@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.example.AdrianCarrasco.component.MethodLogger;
 import com.example.AdrianCarrasco.converter.JuegoConverter;
 import com.example.AdrianCarrasco.converter.UserConverter;
 import com.example.AdrianCarrasco.converter.VentaConverter;
@@ -17,7 +18,9 @@ import com.example.AdrianCarrasco.entity.Venta;
 import com.example.AdrianCarrasco.model.JuegoModel;
 import com.example.AdrianCarrasco.model.UserModel;
 import com.example.AdrianCarrasco.model.VentaModel;
+import com.example.AdrianCarrasco.repository.JuegoJpaRepository;
 import com.example.AdrianCarrasco.repository.VentaJpaRepository;
+import com.example.AdrianCarrasco.service.JuegoService;
 import com.example.AdrianCarrasco.service.VentaService;
 
 @Service("ventaServiceImpl")
@@ -38,6 +41,18 @@ public class VentaServiceImpl implements VentaService{
 	@Autowired
 	@Qualifier("juegoConverter")
 	private JuegoConverter juegoConverter;
+	
+	@Autowired
+	@Qualifier("juegoServiceImpl")
+	private JuegoService juegoService;
+	
+	@Autowired
+	@Qualifier("juegoJpaRepository")
+	private JuegoJpaRepository juegoJpaRepository;
+	
+	@Autowired
+	@Qualifier("methodLogger")
+	private MethodLogger logger;
 
 	@Override
 	public List<VentaModel> listAllVentas() {
@@ -45,7 +60,11 @@ public class VentaServiceImpl implements VentaService{
 	}
 
 	@Override
-	public Venta addVenta(VentaModel ventaModel) {
+	public Venta addVenta(VentaModel ventaModel, int amount) {
+		JuegoModel juegoModel = juegoService.findById(ventaModel.getJuego().getId());
+		juegoModel.setStock(juegoModel.getStock() - amount);
+		juegoJpaRepository.save(juegoConverter.transform(juegoModel));
+		ventaModel.setFecha(new java.sql.Date(System.currentTimeMillis()));
 		ventaModel.setFactura(String.valueOf(Instant.now().toEpochMilli()));
 		return ventaJpaRepository.save(ventaConverter.transform(ventaModel));
 	}
@@ -77,13 +96,8 @@ public class VentaServiceImpl implements VentaService{
 	}
 
 	@Override
-	public VentaModel findByJuego(JuegoModel juegoModel) {
-		if(ventaJpaRepository.findByJuego(juegoConverter.transform(juegoModel)) != null) {
-			return ventaConverter.transform(ventaJpaRepository.findByJuego(juegoConverter.transform(juegoModel)));
-		}
-		else {
-			return null;
-		}
+	public List<VentaModel> findAllByJuego(JuegoModel juegoModel) {
+		return new ArrayList<VentaModel>(ventaJpaRepository.findAllByJuego(juegoConverter.transform(juegoModel)).stream().map(v -> ventaConverter.transform(v)).collect(Collectors.toList()));
 	}
 
 	@Override

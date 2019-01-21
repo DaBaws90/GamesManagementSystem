@@ -13,12 +13,7 @@
 				<h2>Listado de participaciones</h2>
 			</div>
 		</div>
-		<div class="row" th:if="${!participacionesModels.isEmpty()}">
-			<div class="col-md-8 offset-md-2 mt-2 mb-2 text-center">
-				<a th:href="@{'/participaciones/addParticipacion'}"><i class="fas fa-plus"></i> Añadir participación</a>
-			</div>
-		</div>
-		<div th:if="${!participacionesModels.isEmpty()}" class="row">
+		<div th:if="${!participacionesModels.isEmpty()}" class="row mt-2 mb-2">
 			<div class="col-md-8 offset-md-2">
 				<div class="mt-3">
 					<table class="table table-dark">
@@ -28,7 +23,6 @@
 								<th scope="col">Competición</th>
 								<th scope="col">Fecha</th>
 								<th scope="col">Posición</th>
-								<!-- <th scope="col">Juego</th> -->
 								<th scope="col"></th>
 								<th scope="col"></th>			
 							</tr>
@@ -39,7 +33,6 @@
 								<td th:text="${part.competicion.getNombre()} +' ('+ ${part.competicion.getLugar()} +')'"></td>
 								<td th:text="${part.competicion.getFecha()}"></td>
 								<td th:text="${part.posicion == 0} ? 'X' : ${part.posicion}"></td>
-								<!-- <td th:text="${part.competicion.getJuegoModel().getTitulo()}"></td> -->
 								<td><a th:href="@{'/participaciones/editParticipacion/' + ${part.id}}"><i class="far fa-edit"></i></a></td>
 								<td><a onclick="return confirm('Estás seguro?')" th:href="@{'/participaciones/delete/' + ${part.id}}"><i class="far fa-trash-alt"></i></a></td>
 							</tr>
@@ -53,17 +46,32 @@
 			<div class="col-md-8 offset-md-2">
 				<div th:if="${participacionesModels.isEmpty()}" class="text-center mt-3 flex-container-competicionesIndex">
 					<h5 class="text-muted">There is no users registered in any tournament at this moment.</h5>
-					<!-- <a th:href="@{'/participaciones/addParticipacion'}"> Let´s add it!</a> -->
 				</div>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-md-8 offset-md-2 text-center">
-				<div th:if="${edited == 1}" class="alert alert-info text-center">Se realizó la edición con éxito</div>
-				<div th:if="${deleted == 1}" class="alert alert-info text-center">Se eliminó el registro con éxito</div>
-				<div th:if="${deleted == 0}" class="alert alert-info text-center">No se pudo eliminar el registro</div>
-				<div th:if="${insert == 1}" class="alert alert-info text-center">Se agregó con éxito el registro</div>
+				<div th:if="${edited == 1}" class="alert alert-info alert-dismissible fade show text-center">Se registró la posición con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${deleted == 1}" class="alert alert-info alert-dismissible fade show text-center">Se eliminó el registro con éxito
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${deleted == 0}" class="alert alert-danger alert-dismissible fade show text-center">No se pudo eliminar el registro
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
+				<div th:if="${insert == 1}" class="alert alert-info alert-dismissible fade show text-center">Se añadió con éxito el registro
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+                </div>
 			</div>
 		</div>
 	</div>

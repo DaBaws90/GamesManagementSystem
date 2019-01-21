@@ -55,7 +55,7 @@ public class JuegoModel {
 	
 	private Set<AlquilerModel> alquileresModel = new HashSet<AlquilerModel>();
 	
-	private VentaModel ventaModel;
+	private Set<VentaModel> ventasModel = new HashSet<VentaModel>();
 
 	private Set<CompeticionModel> competiciones = new HashSet<CompeticionModel>();
 
@@ -65,7 +65,7 @@ public class JuegoModel {
 
 	public JuegoModel(int id, String titulo, String descripcion, Date lanzamiento, String pegi, String tipo,
 			String caratula, boolean alquilado, float precio, int stock, Set<CategoriaModel> categoriasModel,
-			Set<PlataformaModel> plataformasModel, Set<AlquilerModel> alquileresModel, VentaModel ventaModel,
+			Set<PlataformaModel> plataformasModel, Set<AlquilerModel> alquileresModel, Set<VentaModel> ventasModel,
 			Set<CompeticionModel> competiciones) {
 		super();
 		this.id = id;
@@ -81,7 +81,7 @@ public class JuegoModel {
 		this.categoriasModel = categoriasModel;
 		this.plataformasModel = plataformasModel;
 		this.alquileresModel = alquileresModel;
-		this.ventaModel = ventaModel;
+		this.ventasModel = ventasModel;
 		this.competiciones = competiciones;
 	}
 
@@ -189,12 +189,12 @@ public class JuegoModel {
 		this.alquileresModel = alquileresModel;
 	}
 
-	public VentaModel getVenta() {
-		return ventaModel;
+	public Set<VentaModel> getVentas() {
+		return ventasModel;
 	}
 
-	public void setVenta(VentaModel ventaModel) {
-		this.ventaModel = ventaModel;
+	public void setVentas(Set<VentaModel> ventasModel) {
+		this.ventasModel = ventasModel;
 	}
 
 	public Set<CompeticionModel> getCompeticiones() {

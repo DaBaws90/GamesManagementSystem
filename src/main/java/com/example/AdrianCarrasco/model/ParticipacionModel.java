@@ -1,7 +1,6 @@
 package com.example.AdrianCarrasco.model;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class ParticipacionModel {
 
@@ -14,7 +13,7 @@ public class ParticipacionModel {
 	private CompeticionModel competicionModel;
 
 //	Puede ser null si todavía no se celebró la competición
-	@Size(min=1)
+//	@Min(1)
 	private Integer posicion;
 
 	public ParticipacionModel() {

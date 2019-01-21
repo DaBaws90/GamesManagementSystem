@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments/head.html :: headerfiles">
+<meta charset="UTF-8">
+<title id="pageTitle">Edit Games Page</title>
+</head>
+<body>
+	<div th:replace="fragments/navbar :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'div-navbar-admin' : 'div-navbar'"></div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5">
+				<div class="text-center">
+					<h2>Editar juego</h2>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="alert alert-danger alert-dismissible fade show text-center" th:if="${edited == 0}">No se pudo editar el juego
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    	<span aria-hidden="true">&times;</span>
+				  	</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 offset-md-2 mt-5">
+				<div class="text-center">
+					<form th:action="@{/juegos/update}" th:object="${juegoModel}" enctype="multipart/form-data" method="POST">
+                        <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
+                        <input type="hidden" th:field="*{id}">
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="titulo">Titulo</label>
+							<div class="col-md-10">
+								<input class="form-control" type="text" th:field="*{titulo}"/>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="descripcion">Descripción</label>
+							<div class="col-md-10">
+								<textarea class="form-control" rows="4" cols="64" th:field="*{descripcion}">Enter description here...</textarea>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="lanzamiento">Fecha de lanzamiento</label>
+							<div class="col-md-10">
+								<input class="form-control" type="date" th:field="*{lanzamiento}"/>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('lanzamiento')}" th:errors="*{lanzamiento}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="pegi">PEGI</label>
+							<div class="col-md-10">
+								<select class="form-control" th:field="*{pegi}" required="required">
+									<option th:value="${pegi}" selected="selected"></option>
+									<option value="OK">PEGI OK</option>
+									<option value="3">PEGI 3</option>
+									<option value="7">PEGI 7</option>
+									<option value="12">PEGI 12</option>
+									<option value="16">PEGI 16</option>
+									<option value="18">PEGI 18</option>
+								</select>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('pegi')}" th:errors="*{pegi}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="tipo">Finalidad</label>
+							<div class="col-md-10">
+								<select class="form-control" th:field="*{tipo}" required="required">
+									<option th:value="${tipo}" selected="selected"></option>
+									<option value="Venta">Vender</option>
+									<option value="Alquiler">Alquilar</option>
+								</select>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="caratula">Imagen</label>
+							<div class="col-md-10">
+								<input class="form-control" accept=".jpg,.jpeg,.png,.bmp,.gif" type="file" id="caratula" name="file"/>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('caratula')}" th:errors="*{caratula}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="categorias">Categorías</label>
+							<div class="col-md-10">
+								<!-- onblur="return confirm('Se añadirán las siguientes categorías. ¿Está seguro?')" -->
+								<select th:if="${!categoriasModels.isEmpty()}" class="form-control" name="categoriasList" multiple="multiple">
+									<option value="0" disabled="disabled">Select categories...</option>
+									<option th:each="categoria : ${categoriasModels}"
+										 th:value="${categoria.id}"
+										 th:text="${categoria.nombre}">
+									</option>
+								</select>
+								<select th:if="${categoriasModels.isEmpty()}" class="form-control" th:field="*{categorias}">
+									<option value="">There is no categories to show</option>
+								</select>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('categorias')}" th:errors="*{categorias}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="plataformas">Plataformas</label>
+							<div class="col-md-10">
+								<select th:if="${!plataformasModels.isEmpty()}" class="form-control" name="plataformasList" multiple="multiple">
+									<option value="0" disabled="disabled">Select platforms...</option>
+									<option th:each="plataforma : ${plataformasModels}"
+										 th:value="${plataforma.id}"
+										 th:text="${plataforma.nombre}">
+									</option>
+								</select>
+								<select th:if="${plataformasModels.isEmpty()}" class="form-control" th:field="*{plataformas}">
+									<option value="">There is no platforms to show</option>
+								</select>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('plataformas')}" th:errors="*{plataformas}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="precio">Precio</label>
+							<div class="col-md-10">
+								<input lang="en-US" aria-describedby="precioHelp" class="form-control" type="number" step="0.01" th:field="*{precio}"/>
+								<small id="precioHelp" class="form-text text-muted">Enteros separados por punto (.) seguidos de hasta dos decimales.</small>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="stock">Unidades</label>
+							<div class="col-md-10">
+								<input class="form-control" type="number" th:field="*{stock}"/>
+								<div class="text-center alert-dismissible fade show alert alert-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								    	<span aria-hidden="true">&times;</span>
+								  	</button>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<div class="col-md-12 text-center mt-5">
+								<button type="submit" class="btn btn-primary mt-3 mb-5">Guardar cambios</button>
+								<a class="float-left mt-4" th:href="@{'/juegos/'}"><i class="fas fa-chevron-left"> </i> Atrás</a>
+							</div>
+						</div>
+						
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? 'footer-admin' : 'footer'"></div>
+</body>
+</html>

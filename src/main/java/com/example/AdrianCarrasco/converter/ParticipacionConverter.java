@@ -19,7 +19,6 @@ public class ParticipacionConverter {
 	private DozerBeanMapper dozer = new DozerBeanMapper();
 	
 	public ParticipacionModel transform(Participacion participacion) {
-		logger.regularMessage(participacion.toString());
 		return dozer.map(participacion, ParticipacionModel.class);
 	}
 	
