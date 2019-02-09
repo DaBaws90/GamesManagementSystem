@@ -2,7 +2,7 @@
 
 <div class="container-fluid" th:fragment="div-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light base-navbar">
-		<a class="navbar-brand" href="#">Game S.L.</a>
+		<a style="margin-right: 3%;" class="navbar-brand" href="#">Game S.L.</a>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -32,9 +32,9 @@
 					<a class="nav-link" th:href="@{'/competiciones/'}">Torneos</a>
 				</li>
 				
-				<li sec:authorize="isAuthenticated()" class="nav-item">
+				<!-- <li sec:authorize="isAuthenticated()" class="nav-item">
 					<a class="nav-link" th:href="@{'/participaciones/'}">Participaciones</a>
-				</li>
+				</li> -->
 				
 				<!-- <li class="nav-item">
 					<a class="nav-link" th:href="@{'/juegos/'}">Juegos</a>
@@ -84,18 +84,40 @@
 				<a class="nav-item nav-link active" th:href="@{'/home/'}">Home <span class="sr-only">(current)</span></a> 
 				<a class="nav-item nav-link" th:href="@{'/users/'}">Usuarios</a>
                 <a class="nav-item nav-link" th:href="@{'/noticias/'}">Noticias</a>
-                <a class="nav-item nav-link" th:href="@{'/competiciones/'}">Torneos</a>
-                <a class="nav-item nav-link" th:href="@{'/participaciones/'}">Participaciones</a>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>Categorías y plataformas</span>
+                    </a>
+                    <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{'/categorias/'}">Categorías</a>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{'/plataformas/'}">Plataformas</a>
+                    </div>
+                </div>
+                
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>Gestionar torneos</span>
+                    </a>
+                    <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{'/competiciones/'}">Torneos</a>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{'/participaciones/'}">Participaciones</a>
+                    </div>
+                </div>
+
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span>Gestionar juegos</span>
                     </a>
                     <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{'/juegos/'}">Juegos</a>
+                    <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{'/ventas/'}">Ventas</a>
                     <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{'/alquileres/'}">Alquileres</a>
                     <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" th:href="@{'/alquileres/index/alquileres'}">Alquileres pendientes</a>
+                        <a class="dropdown-item" th:href="@{'/alquileres/index/pendientes'}">Alquileres pendientes</a>
                     </div>
                 </div>
 			</div>

@@ -67,7 +67,6 @@ public class AlquilerServiceImpl implements AlquilerService{
 		juegoModel.setAlquilado(true);
 		juegoJpaRepository.save(juegoConverter.transform(juegoModel));
 		Date today = new Date(System.currentTimeMillis());
-//		logger.regularMessage("TODAY IS: " + today);
 		alquilerModel.setJuego(juegoModel);
 		alquilerModel.setFechaAlquiler(today);
 		return alquilerJpaRepository.save(alquilerConverter.transform(alquilerModel));
@@ -81,7 +80,6 @@ public class AlquilerServiceImpl implements AlquilerService{
 	@Override
 	public Alquiler updateAlquiler(AlquilerModel alquilerModel) {
 		// TODO Auto-generated method stub
-//		Manejar juegoJpaRepository
 		return null;
 	}
 

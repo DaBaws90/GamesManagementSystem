@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,18 +50,21 @@ public class AlquileresController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public RedirectView toIndex() {
 		logger.redirect("/alquileres/index", "/alquileres/");
 		return new RedirectView("/alquileres/index");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index/pendientes")
 	public ModelAndView pendientes() {
 		List<AlquilerModel> alquileresModels = alquilerService.findAllByJuegoAlquiladoTrue();
 		return new ModelAndView(Constants.ALQUILERES_PENDIENTES).addObject("alquileresModels", alquileresModels);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<AlquilerModel> alquileresModels = alquilerService.listAllAlquileres();
@@ -68,7 +72,7 @@ public class AlquileresController {
 		return new ModelAndView(Constants.ALQUILERES_INDEX).addObject("alquileresModels", alquileresModels);
 	}
 	
-//	Id del juego en cuestión que se va a alquilar
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@GetMapping("/alquilarJuego/{id}")
 	public ModelAndView addAlquilerForm(@PathVariable(name = "id") int id) {
 		JuegoModel juegoModel = juegoService.findById(id);
@@ -78,6 +82,8 @@ public class AlquileresController {
 //				.addObject("userModel", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//	El admin no debería de poder alquilar juegos
 	@PostMapping("/insert")
 	public ModelAndView addAlquiler(@Valid @ModelAttribute("alquilerModel") AlquilerModel alquilerModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
@@ -113,6 +119,7 @@ public class AlquileresController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@GetMapping("/devolucion/{id}")
 	public ModelAndView devolverJuego(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView(); /* "redirect:/juegos/index/alquileres" */

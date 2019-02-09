@@ -37,9 +37,6 @@
                     <a th:href="@{'/users/editUser'}"><i class="fas fa-pencil-alt profile"></i>Editar perfil</a>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
                     <a href="#">Contact</a>
                 </li>
             </ul>
@@ -47,7 +44,7 @@
             <ul class="list-unstyled CTAs">
                 <li>
                     <form th:action="@{/logout}" method="POST" class="article">
-                    	<button type="submit" class="btn btn-outline-dark btn-block btn-logOut">
+                    	<button onclick="return confirm('¿Desea cerrar su sesión?')" type="submit" class="btn btn-outline-dark btn-block btn-logOut">
                     		<i class="fas fa-sign-out-alt"></i> Log out
                     	</button>
                     </form>

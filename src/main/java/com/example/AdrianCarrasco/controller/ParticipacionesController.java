@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -51,12 +52,14 @@ public class ParticipacionesController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public RedirectView toIndex() {
 		logger.redirect("/participaciones/index", "/participaciones/");
 		return new RedirectView("/participaciones/index");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<ParticipacionModel> participacionesModels = participacionService.listAllParticipaciones();
@@ -64,6 +67,7 @@ public class ParticipacionesController {
 		return new ModelAndView(Constants.PARTICIPACIONES_INDEX).addObject("participacionesModels", participacionesModels);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 //	No pueden ser editados ni el usuario, ni la competicion. Solamente el admin podrá registrar el resultado. Si el usuario quiere cambiar de competicion,
 //	deberá borrar la solicitud y crear una nueva con la competicion pertinente
 	@GetMapping("/editParticipacion/{id}")
@@ -74,16 +78,10 @@ public class ParticipacionesController {
 		mav.addObject("participacionModel", participacionModel);
 //			.addObject("competicionesModels", competicionService.listAllCompeticiones())
 //			.addObject("userModel", participacionModel.getUser());
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if(auth.getAuthorities().contains("ROLE_ADMIN")) {
-//			mav.addObject("userModel", participacionModel.getUser());
-//		}
-//		else {
-//			mav.addObject("userModel", userService.findByUsername(auth.getName()));
-//		}
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/update")
 	public ModelAndView editParticipacion(@Valid @ModelAttribute("participacionModel") ParticipacionModel participacionModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
@@ -108,6 +106,7 @@ public class ParticipacionesController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@GetMapping("/addParticipacion")
 	public ModelAndView addParticipacionForm() {
 		logger.info("GET", "addParticipacionForm", "PARTICIPACIONES_ADD", "ParticipacionesController", "PARTICIPACION", "INSERTED", "NEW PARTICIPACION (Empty)");
@@ -117,12 +116,12 @@ public class ParticipacionesController {
 				.addObject("userModel", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 //	El adminstrador no debería añadir participaciones, solo el usuario podrá apuntarse a un torneo 
 	@PostMapping("/insert")
 	public ModelAndView addParticipacion(@Valid @ModelAttribute("participacionModel") ParticipacionModel participacionModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, @ModelAttribute("userModel") UserModel userModel) {
 		ModelAndView mav = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		logger.info("POST", "addParticipacion", "PARTICIPACIONES_ADD", "ParticipacionesController", "PARTICIPACION", "INSERTED", participacionModel);
 		if(bindingResult.hasErrors()) {
 			logger.validationError();
@@ -132,12 +131,7 @@ public class ParticipacionesController {
 			if(participacionService.checkAvailability(participacionModel)) {
 				if(participacionService.addParticipacion(participacionModel, userModel) != null) {
 					logger.success("PARTICIPACION", "INSERTED", participacionModel);
-//					if(auth.getAuthorities().contains("ROLE_USER")) {
 					mav.setViewName("redirect:/users/profile");
-//					}
-//					else {
-//						mav.setViewName("redirect:/participaciones/index");
-//					}
 					redirectAttributes.addFlashAttribute("insert", 1);
 				}
 				else {
@@ -155,6 +149,7 @@ public class ParticipacionesController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 //	Aquí ocurre lo mismo, solament el usuario podrá cancelar su participación en un torneo. Aunque dejaré la opción y la lógica implementada para que el admin pueda cancelar alguna.
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteParticipacion(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {

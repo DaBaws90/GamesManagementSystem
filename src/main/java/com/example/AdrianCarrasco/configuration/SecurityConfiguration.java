@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
@@ -27,12 +29,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/css/*", "/images/*").permitAll()
-//			.antMatchers("/home/*").hasRole("ADMIN")
+			.antMatchers("/home/*").permitAll()
 			.antMatchers("/users/register").permitAll()
 			.antMatchers("/users/signup").permitAll()
-//			.antMatchers("/users/profile").hasRole("ADMIN")
-//			.anyRequest().authenticated().and()
-			.anyRequest().permitAll().and()
+			.antMatchers("/noticias/details/*").permitAll()
+			.antMatchers("/juegos/index/compras").permitAll()
+			.antMatchers("/juegos/index/alquileres").permitAll()
+			.antMatchers("/juegos/details/*").permitAll()
+			.antMatchers("/competiciones/index").permitAll()
+//			.antMatchers("/users/profile").hasRole("USER")
+//			.antMatchers("/participaciones/add").hasRole("USER")
+			
+			.anyRequest().authenticated().and()
+//			.anyRequest().permitAll().and()
 			.formLogin().loginPage("/login").loginProcessingUrl("/signin")
 			.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/signin", true).permitAll().and()
 			.logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll();

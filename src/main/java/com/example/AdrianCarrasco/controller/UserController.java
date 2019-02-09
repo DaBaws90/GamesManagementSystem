@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,12 +44,14 @@ public class UserController {
 	@Qualifier("methodLogger")
 	private MethodLogger logger;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public RedirectView toIndex() {
 		logger.redirect("users/index", "users/");
 		return new RedirectView("/users/index");
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index")
 	public ModelAndView index() {
 //		Asigno a una lista la llamada al servicio para recuperar todos los usuarios, de este modo solo realizao la consulta a la base de datos una vez
@@ -57,6 +60,7 @@ public class UserController {
 		return new ModelAndView(Constants.USERS_INDEX).addObject("usersModels", usersModels);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 //	Parametro opcional para que el mismo metodo sea reutilizable, tanto para el admin como para el usuario. Si admin está logueado, enviará el id para
 //	editar ese usuario, si un usuario está logueado, al hacer clikck en editar perfil, llamará a este método pero sin el id, por lo que inyectaremos el usuario correspondiente.
 	@GetMapping("/editUser")
@@ -81,6 +85,7 @@ public class UserController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@PostMapping("/update")
 	public ModelAndView updateUser(@Valid @ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
@@ -139,6 +144,7 @@ public class UserController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/disable/{id}")
 	public ModelAndView disableUser(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/users/index");
@@ -157,6 +163,7 @@ public class UserController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteUser(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/users/index");
@@ -219,6 +226,7 @@ public class UserController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@GetMapping("/profile")
 	public ModelAndView profile() {
 		ModelAndView mav = new ModelAndView(Constants.USERS_PROFILE);

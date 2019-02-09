@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +59,7 @@ public class CompeticionesController {
 		return new ModelAndView(Constants.COMPETICIONES_INDEX).addObject("competicionesModels", competicionesModels);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/editCompeticion/{id}")
 	public ModelAndView editCompeticionForm(@PathVariable(name = "id") int id) {
 		ModelAndView mav = new ModelAndView(Constants.COMPETICIONES_EDIT);
@@ -68,6 +70,7 @@ public class CompeticionesController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/update")
 	public ModelAndView updateCompeticion(@Valid @ModelAttribute("competicionModel") CompeticionModel competicionModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
@@ -99,6 +102,7 @@ public class CompeticionesController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/addCompeticion")
 	public ModelAndView addCompeticionForm() {
 		logger.info("GET", "addCompeticionForm", "COMPETICIONES_ADD", "CompeticionesController", "COMPETICION", "INSERTED", "NEW COMPETICION (Empty)");
@@ -106,6 +110,7 @@ public class CompeticionesController {
 				.addObject("competicionModel", new CompeticionModel()).addObject("juegosModels", juegoService.listAllJuegos());
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/insert")
 	public ModelAndView addCompeticion(@Valid @ModelAttribute("competicionModel") CompeticionModel competicionModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
@@ -141,6 +146,7 @@ public class CompeticionesController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteCompeticion(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/competiciones/index");

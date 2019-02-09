@@ -39,7 +39,6 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(Constants.HOME);
 		List<NoticiaModel> noticiasModels = noticiaService.listAllNoticias();
 		mav.addObject("noticiasModels", noticiasModels);
-//		logger.info("GET", "index", "HOME view", "MainController", "NOTICIAS", "RETRIEVED", "List<NoticiaModel> noticiasModel");
 		logger.info("GET", "index", "HOME view", "MainController", "NOTICIAS", "RETRIEVED", noticiasModels.toString());
 		return mav;
 	}

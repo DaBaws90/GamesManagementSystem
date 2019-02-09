@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,12 +36,14 @@ public class NoticiasController {
 	@Qualifier("methodLogger")
 	private MethodLogger logger;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public RedirectView toIndex() {
 		logger.redirect("noticias/index", "noticias/");
 		return new RedirectView("/noticias/index");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<NoticiaModel> noticiasModels = noticiaService.listAllNoticias();
@@ -50,6 +53,7 @@ public class NoticiasController {
 		return mav;
 	}
 	
+	@PreAuthorize("permitAll()")
 	@GetMapping("/details/{id}")
 	public ModelAndView details(@PathVariable(name="id") int id) {
 		NoticiaModel noticiaModel = noticiaService.findById(id);
@@ -59,6 +63,7 @@ public class NoticiasController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/editNoticia/{id}")
 	public ModelAndView editNoticiaForm(@PathVariable(name = "id") int id) {
 		NoticiaModel noticiaModel = noticiaService.findById(id);
@@ -68,6 +73,7 @@ public class NoticiasController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/update")
 	public ModelAndView updateNoticia(@Valid @ModelAttribute("noticiaModel") NoticiaModel noticiaModel, BindingResult bindingResult, 
 			RedirectAttributes redirectAttributes) {
@@ -92,12 +98,14 @@ public class NoticiasController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/addNoticia")
 	public ModelAndView addNoticiaForm() {
 		logger.info("GET", "addNoticiaForm", "NOTICIAS_ADD", "NoticiasController", "NOTICIA", "INSERTED", "NEW NOTICIA (Empty)");
 		return new ModelAndView(Constants.NOTICIAS_ADD).addObject("noticiaModel", new NoticiaModel());
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/insert")
 	public ModelAndView addNoticia(@Valid @ModelAttribute("noticiaModel") NoticiaModel noticiaModel, BindingResult bindingResult, 
 			RedirectAttributes redirectAttributes) {
@@ -122,6 +130,7 @@ public class NoticiasController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteNoticia(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/noticias/index");

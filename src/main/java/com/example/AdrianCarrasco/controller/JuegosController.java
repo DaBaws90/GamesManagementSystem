@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,12 +57,14 @@ public class JuegosController {
 	@Qualifier("fileServiceImpl")
 	private FileService fileService;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public RedirectView toIndex() {
 		logger.redirect("/juegos/index", "/juegos/");
 		return new RedirectView("/juegos/index");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<JuegoModel> juegosModels = juegoService.listAllJuegos();
@@ -83,6 +86,7 @@ public class JuegosController {
 		return new ModelAndView(Constants.JUEGOS_ALQUILERES).addObject("juegosAlquiler", juegosAlquiler);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/addJuego")
 	public ModelAndView addJuegoForm() {
 		List<CategoriaModel> categoriasModels = categoriaService.listAllCategories();
@@ -94,6 +98,7 @@ public class JuegosController {
 				.addObject("plataformasModels", plataformasModels);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/insert")
 	public ModelAndView addJuego(@Valid @ModelAttribute("juegoModel") JuegoModel juegoModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, @RequestParam(required = false) List<Integer> categoriasList, 
@@ -136,6 +141,7 @@ public class JuegosController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/editJuego/{id}")
 	public ModelAndView editJuegoForm(@PathVariable(name = "id") int id) {
 		JuegoModel juegoModel = juegoService.findById(id);
@@ -145,6 +151,7 @@ public class JuegosController {
 				.addObject("plataformasModels", plataformaService.listAllPlataformas());
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/update")
 	public ModelAndView updateJuego(@Valid @ModelAttribute("juegoModel") JuegoModel juegoModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, @RequestParam(required = false) List<Integer> categoriasList, 
@@ -189,6 +196,7 @@ public class JuegosController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/delete/{id}")
 	public ModelAndView deleteJuego(@PathVariable(name = "id") int id, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView("redirect:/juegos/index");

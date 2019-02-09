@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -48,12 +49,14 @@ public class VentasController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public RedirectView toIndex() {
 		logger.redirect("/ventas/index", "ventas/");
 		return new RedirectView("/ventas/index");
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/index")
 	public ModelAndView index() {
 		List<VentaModel> ventasModels = ventaService.listAllVentas();
@@ -61,7 +64,8 @@ public class VentasController {
 		return new ModelAndView(Constants.VENTAS_INDEX).addObject("ventasModels", ventasModels);
 	}
 	
-//	Recibe id del juego que se va a comprar desde la vista detalles del juego, con boton de comprar o, mejor dicho, enlace con apariencia de botón
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//	El admin no debería poder comprar
 	@GetMapping("/venderJuego/{id}")
 	public ModelAndView addVentaForm(@PathVariable(name = "id") int id) {
 		ModelAndView mav = new ModelAndView(Constants.VENTAS_ADD);
@@ -72,6 +76,7 @@ public class VentasController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	@PostMapping("/insert")
 	public ModelAndView addVenta(@Valid @ModelAttribute("ventaModel") VentaModel ventaModel, BindingResult bindingResult, 
 			RedirectAttributes redirectAttributes, @RequestParam int amount) {
