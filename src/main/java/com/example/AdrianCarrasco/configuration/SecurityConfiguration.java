@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.antMatchers("/juegos/index/compras").permitAll()
 			.antMatchers("/juegos/index/alquileres").permitAll()
 			.antMatchers("/juegos/details/*").permitAll()
-			.antMatchers("/competiciones/index").permitAll()
+			.antMatchers("/competiciones/*").permitAll()
 //			.antMatchers("/users/profile").hasRole("USER")
 //			.antMatchers("/participaciones/add").hasRole("USER")
 			
