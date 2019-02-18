@@ -175,6 +175,9 @@ public class JuegosController {
 						e.printStackTrace();
 					}
 				}
+				else {
+					juegoModel.setCaratula(juegoService.findById(juegoModel.getId()).getCaratula());
+				}
 				if(juegoService.updateJuego(juegoModel, categoriasList, plataformasList) != null) {
 					logger.success("JUEGO", "EDITED", juegoModel);
 					mav.setViewName("redirect:/juegos/index");
