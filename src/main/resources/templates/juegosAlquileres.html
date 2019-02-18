@@ -51,7 +51,7 @@
                                         <small class="text-muted" th:text="${juegosAlquiler[juegoIndex].pegi eq 'OK'} ? 'Para todos los públicos' : 'PEGI ' + ${juegosAlquiler[juegoIndex].pegi}"></small>
                                     </li>
                                     <li class="list-group-item border-info">
-                                        <small class="text-muted" th:text="'Fecha de lanzamiento: ' + ${juegosCompra[juegoIndex].lanzamiento}"></small>
+                                        <small class="text-muted" th:text="'Fecha de lanzamiento: ' + ${juegosAlquiler[juegoIndex].lanzamiento}"></small>
                                     </li>
                                 </ul>
                                 <div class="card-footer bg-light">   
